@@ -5,6 +5,8 @@ import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
+import { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice } from './functions'
+import { playVoice } from './playSoud'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -13,6 +15,18 @@ export default function Home() {
   useEffect(() => {
     console.log('user:', user)
   }, [])
+
+  const onButtonPress  = async() => {
+    const res = await generateAnswer({message: '今日の天気は？'})
+    console.log('応答', res)
+    const romaji = await convertNihongoToRomaji({text: res})
+    console.log('ローマ字', romaji)
+    const uuid = await generateVoice({text: romaji})
+    console.log('UUID', uuid)
+    const voice = await getVoice({uuid})
+    console.log('Voice URL', voice)
+    playVoice({voice})
+  }
   
   return (
     <ScreenTemplate screen='Home' statusBar='dark-content'>
@@ -25,39 +39,7 @@ export default function Home() {
           title="Go to Details"
           color="white"
           backgroundColor={colors.lightPurple}
-          onPress={() => {
-            navigation.navigate('Details', { from: 'Home' })
-          }}
-        />
-        <View style={{marginVertical: 10}} />
-        <Button
-          title="Go to Modal"
-          color="white"
-          backgroundColor={colors.lightPurple}
-          onPress={() => {
-            navigation.navigate('ModalStack', {
-              screen: 'Modal',
-              params: {from: 'Home'}
-            })
-          }}
-        />
-        <View style={{marginVertical: 10}} />
-        <Button
-          title="Go to Post"
-          color="white"
-          backgroundColor={colors.lightPurple}
-          onPress={() => {
-            navigation.navigate('Post')
-          }}
-        />
-        <View style={{marginVertical: 10}} />
-        <Button
-          title="Go to Menu"
-          color="white"
-          backgroundColor={colors.lightPurple}
-          onPress={() => {
-            navigation.navigate('Menu')
-          }}
+          onPress={() => onButtonPress()}
         />
       </View>
     </ScreenTemplate>
