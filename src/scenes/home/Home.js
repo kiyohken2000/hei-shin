@@ -4,7 +4,7 @@ import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice, textFlatten, convertKanjiToHiragana } from './functions'
+import { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice, textFlatten, convertKanjiToHiragana, getVoicePolling } from './functions'
 import { playVoice, playError } from './playSoud'
 import Voice, {
   SpeechResultsEvent,
@@ -20,7 +20,8 @@ export default function Home() {
   const [isListening, setIsListening] = useState(false);
   const [answer, setAnswer] = useState('')
   const [isProcess, setIsProcess] = useState(false)
-
+  const [isPlay, setIsPlay] = useState(false)
+ 
   useEffect(() => {
     function onSpeechResults(e) {
       setResults(e.value ?? []);
@@ -67,23 +68,29 @@ export default function Home() {
       const uuid = await generateVoice({text: romaji})
       if(!uuid) return onError()
       console.log('UUID', uuid)
-      const voice = await getVoice({uuid})
+      const voice = await getVoicePolling({uuid})
       if(!voice) return onError()
       console.log('Voice URL', voice)
       setAnswer(res)
-      playVoice({voice})
+      setIsPlay(true)
+      const voiceResult = await playVoice({voice})
+      setIsPlay(false)
       setIsProcess(false)
     } catch(e) {
       setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
       playError()
       setIsProcess(false)
+      setIsPlay(false)
     }
   }
 
-  const onError = () => {
+  const onError = async() => {
+    setIsPlay(true)
     setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
-    playError()
+    setIsPlay(true)
+    const voiceResult = await playError()
     setIsProcess(false)
+    setIsPlay(false)
   }
   
   return (
@@ -98,6 +105,7 @@ export default function Home() {
             onPress={toggleListening}
             answer={answer}
             isProcess={isProcess}
+            isPlay={isPlay}
           />
         </View>
       </View>
@@ -113,11 +121,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textArea: {
-    flex: 3,
+    flex: 1,
     width: '100%',
   },
   buttonArea: {
-    flex: 1.3,
+    flex: 2,
     width: '100%',
   }
 })

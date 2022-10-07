@@ -11,13 +11,15 @@ const playVoice = async ({voice}) => {
       uri: voice
     });
     await soundObjectCheck.playAsync();
+    return true
   } catch (error) {
     console.log('sound error', error);
     await soundObjectCheck.unloadAsync();
+    return true
   }
 }
 
-const playError = async ({voice}) => {
+const playError = async () => {
   let soundObjectCheck = new Audio.Sound();
   try {
     soundObjectCheck.setOnPlaybackStatusUpdate((status) => {
@@ -26,9 +28,11 @@ const playError = async ({voice}) => {
     });
     await soundObjectCheck.loadAsync(require("../../../assets/sound/error.wav"));
     await soundObjectCheck.playAsync();
+    return true
   } catch (error) {
     console.log('sound error', error);
     await soundObjectCheck.unloadAsync();
+    return true
   }
 }
 

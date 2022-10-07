@@ -5,7 +5,7 @@ import {decode, encode} from 'base-64'
 if (!global.btoa) {global.btoa = encode;}
 if (!global.atob) {global.atob = decode;}
 
-const sleep = (ms) => {
+const sleeping = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -88,18 +88,58 @@ const generateVoice = async({text}) => {
   }
 }
 
+const getVoicePolling = async({uuid}) => {
+  console.log('polling start')
+  const res1 = await getVoice({uuid})
+  if(res1) {
+    return res1
+  } else {
+    console.log('sleep 1')
+    await sleeping(1*1000);
+    const res2 = await getVoice({uuid})
+    if(res2) {
+      return res2
+    } else {
+      console.log('sleep 2')
+      await sleeping(1*1000);
+      const res3 = await getVoice({uuid})
+      if(res3) {
+        return res3
+      } else {
+        console.log('sleep 3')
+        await sleeping(1*1000);
+        const res4 = await getVoice({uuid})
+        if(res4) {
+          return res4
+        } else {
+          console.log('sleep 4')
+          await sleeping(1*1000);
+          const res5 = await getVoice({uuid})
+          if(res5) {
+            return res5
+          } else {
+            return null
+          }
+        }
+      }
+    }
+  }
+}
+
 const getVoice = async({uuid}) => {
   try {
-    await sleep(10*1000);
-    const response = await axios.get('https://api.uberduck.ai/speak-status', {
-      params: {
-        'uuid': uuid
-      },
-      auth: {
-        username: 'pub_uwgbmqsbkisaqltihc',
-        password: 'pk_73b45083-e4ea-47ef-bc4e-09bd120afbd1'
+    const response = await axios.get(
+      'https://api.uberduck.ai/speak-status',
+      {
+        params: {
+          'uuid': uuid
+        },
+        auth: {
+          username: key.uberduckKey,
+          password: key.uberduckSecret
+        }
       }
-    });
+    );
     return response.data.path
   } catch(e) {
     console.log('error getVoice', e)
@@ -107,4 +147,12 @@ const getVoice = async({uuid}) => {
   }
 }
 
-export { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice, textFlatten, convertKanjiToHiragana }
+export {
+  generateAnswer,
+  convertNihongoToRomaji,
+  generateVoice,
+  getVoice,
+  textFlatten,
+  convertKanjiToHiragana,
+  getVoicePolling
+}

@@ -8,7 +8,7 @@ export default function RecognizeVoice(props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerArea}>
-        <Text style={styles.headerText}>私に話しかけてください</Text>
+        <Text style={styles.headerText}>早く質問しろよ</Text>
       </View>
       <View style={styles.recognizeArea}>
         <View style={styles.recognizeContainer}>
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 20
   },
   headerArea: {
     flex: 1,

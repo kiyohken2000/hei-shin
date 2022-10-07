@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity, Dimensions, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Dimensions, Text, ScrollView } from "react-native";
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors, fontSize } from 'theme'
 import Loading from './Loading';
@@ -7,16 +7,16 @@ import Loading from './Loading';
 const { height, width } = Dimensions.get('window')
 
 export default function Buttons(props) {
-  const { onPress, isListening, answer, isProcess } = props
+  const { onPress, isListening, answer, isProcess, isPlay } = props
   const icon = !isListening?"microphone":'stop'
   const buttonColor = !isListening?colors.seagreen:colors.red
 
   return (
     <View style={styles.container}>
       <View style={styles.answerArea}>
-        <View style={styles.answerContainer}>
+        <ScrollView style={styles.answerContainer}>
           <Text style={styles.answerText}>{answer}</Text>
-        </View>
+        </ScrollView>
       </View>
       <View style={styles.buuttonArea}>
         {!isProcess?
@@ -33,7 +33,7 @@ export default function Buttons(props) {
             </TouchableOpacity>
           </View>
           :
-          <Loading />
+          <Loading isPlay={isPlay} />
         }
       </View>
     </View>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   buuttonArea: {
-    flex: 1.5,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    flex: 1,
+    flex: 2,
     paddingHorizontal: 30,
   },
   answerContainer: {
@@ -88,8 +88,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   answerText: {
     fontSize: fontSize.xLarge,
