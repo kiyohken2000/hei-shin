@@ -14,6 +14,10 @@ const textFlatten = ({results}) => {
   return res
 }
 
+const textMerge = ({text}) => {
+  return `${text}。くだらないしつもんでおわっちゃったね。また`
+}
+
 const generateAnswer = async({message}) => {
   try {
     const form = new FormData();
@@ -23,7 +27,8 @@ const generateAnswer = async({message}) => {
       'https://api.a3rt.recruit.co.jp/talk/v1/smalltalk',
       form
     )
-    return response.data.results[0].reply
+    const res = textMerge({text: response.data.results[0].reply})
+    return res
   } catch(e) {
     console.log('error generateAnswer', e)
     return null
@@ -154,5 +159,5 @@ export {
   getVoice,
   textFlatten,
   convertKanjiToHiragana,
-  getVoicePolling
+  getVoicePolling,
 }
