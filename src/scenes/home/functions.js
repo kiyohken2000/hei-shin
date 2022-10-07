@@ -15,7 +15,7 @@ const textFlatten = ({results}) => {
 }
 
 const textMerge = ({text}) => {
-  return `${text}。くだらないしつもんでおわっちゃったね。また`
+  return `${text}。くだらないしつもんでおわっちゃったね。また。`
 }
 
 const generateAnswer = async({message}) => {

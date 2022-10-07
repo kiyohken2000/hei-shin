@@ -77,17 +77,13 @@ export default function Home() {
       setIsPlay(false)
       setIsProcess(false)
     } catch(e) {
-      setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
-      playError()
-      setIsProcess(false)
-      setIsPlay(false)
+      onError()
     }
   }
 
   const onError = async() => {
     setIsPlay(true)
     setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
-    setIsPlay(true)
     const voiceResult = await playError()
     setIsProcess(false)
     setIsPlay(false)
