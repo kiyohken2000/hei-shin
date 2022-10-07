@@ -17,4 +17,19 @@ const playVoice = async ({voice}) => {
   }
 }
 
-export { playVoice }
+const playError = async ({voice}) => {
+  let soundObjectCheck = new Audio.Sound();
+  try {
+    soundObjectCheck.setOnPlaybackStatusUpdate((status) => {
+      if (!status.didJustFinish) return;
+      soundObjectCheck.unloadAsync();
+    });
+    await soundObjectCheck.loadAsync(require("../../../assets/sound/error.wav"));
+    await soundObjectCheck.playAsync();
+  } catch (error) {
+    console.log('sound error', error);
+    await soundObjectCheck.unloadAsync();
+  }
+}
+
+export { playVoice, playError }

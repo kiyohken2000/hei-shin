@@ -1,46 +1,105 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native'
-import Button from 'components/Button'
 import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice } from './functions'
-import { playVoice } from './playSoud'
+import { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice, textFlatten, convertKanjiToHiragana } from './functions'
+import { playVoice, playError } from './playSoud'
+import Voice, {
+  SpeechResultsEvent,
+  SpeechErrorEvent,
+} from "@react-native-voice/voice";
+import RecognizeVoice from './RecognizeVoice'
+import Buttons from './Buttons'
 
 export default function Home() {
   const navigation = useNavigation()
   const { user } = useContext(UserContext)
+  const [results, setResults] = useState([]);
+  const [isListening, setIsListening] = useState(false);
+  const [answer, setAnswer] = useState('')
+  const [isProcess, setIsProcess] = useState(false)
 
   useEffect(() => {
-    console.log('user:', user)
-  }, [])
+    function onSpeechResults(e) {
+      setResults(e.value ?? []);
+    }
+    function onSpeechError(e) {
+      console.error(e);
+    }
+    Voice.onSpeechError = onSpeechError;
+    Voice.onSpeechResults = onSpeechResults;
+    return function cleanup() {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
 
-  const onButtonPress  = async() => {
-    const res = await generateAnswer({message: '今日の天気は？'})
-    console.log('応答', res)
-    const romaji = await convertNihongoToRomaji({text: res})
-    console.log('ローマ字', romaji)
-    const uuid = await generateVoice({text: romaji})
-    console.log('UUID', uuid)
-    const voice = await getVoice({uuid})
-    console.log('Voice URL', voice)
-    playVoice({voice})
+  const toggleListening = async() => {
+    try {
+      if (isListening) {
+        await Voice.stop();
+        const origin = textFlatten({results})
+        await apiRequest({origin})
+        setIsListening(false);
+      } else {
+        setResults([]);
+        await Voice.start("ja-JP");
+        setIsListening(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const apiRequest  = async({origin}) => {
+    try {
+      setIsProcess(true)
+      const res = await generateAnswer({message: origin})
+      if(!res) return onError()
+      console.log('応答', res)
+      const hiragana = await convertKanjiToHiragana({res})
+      if(!hiragana) return onError()
+      console.log('ひらがな', hiragana)
+      const romaji = await convertNihongoToRomaji({text: hiragana})
+      if(!romaji) return onError()
+      console.log('ローマ字', romaji)
+      const uuid = await generateVoice({text: romaji})
+      if(!uuid) return onError()
+      console.log('UUID', uuid)
+      const voice = await getVoice({uuid})
+      if(!voice) return onError()
+      console.log('Voice URL', voice)
+      setAnswer(res)
+      playVoice({voice})
+      setIsProcess(false)
+    } catch(e) {
+      setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
+      playError()
+      setIsProcess(false)
+    }
+  }
+
+  const onError = () => {
+    setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
+    playError()
+    setIsProcess(false)
   }
   
   return (
     <ScreenTemplate screen='Home' statusBar='dark-content'>
       <View style={styles.root}>
-        <Text style={styles.title}>Home</Text>
-        <View style={styles.textContainer}>
-          <Text>ヘッダーなしボトムタブあり</Text>
+        <View style={styles.textArea}>
+          <RecognizeVoice results={results} />
         </View>
-        <Button
-          title="Go to Details"
-          color="white"
-          backgroundColor={colors.lightPurple}
-          onPress={() => onButtonPress()}
-        />
+        <View style={styles.buttonArea}>
+          <Buttons
+            isListening={isListening}
+            onPress={toggleListening}
+            answer={answer}
+            isProcess={isProcess}
+          />
+        </View>
       </View>
     </ScreenTemplate>
   )
@@ -53,13 +112,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: fontSize.xxxLarge,
-    marginBottom: 20,
+  textArea: {
+    flex: 3,
+    width: '100%',
   },
-  textContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 5
+  buttonArea: {
+    flex: 1.3,
+    width: '100%',
   }
 })
