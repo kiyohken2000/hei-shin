@@ -4,7 +4,7 @@ import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { generateAnswer, convertNihongoToRomaji, generateVoice, getVoice, textFlatten, convertKanjiToHiragana, getVoicePolling } from './functions'
+import { generateAnswer, convertNihongoToRomaji, generateVoice, getAbeAnswer, textFlatten, convertKanjiToHiragana, getVoicePolling } from './functions'
 import { playVoice, playError } from './playSoud'
 import Voice, {
   SpeechResultsEvent,
@@ -27,7 +27,9 @@ export default function Home() {
       setResults(e.value ?? []);
     }
     function onSpeechError(e) {
-      console.error(e);
+      console.log(e);
+      setIsPlay(false)
+      setIsProcess(false)
     }
     Voice.onSpeechError = onSpeechError;
     Voice.onSpeechResults = onSpeechResults;
@@ -55,8 +57,9 @@ export default function Home() {
 
   const apiRequest  = async({origin}) => {
     try {
+      if(!origin) return
       setIsProcess(true)
-      const res = await generateAnswer({message: origin})
+      const res = await getAbeAnswer({message: origin})
       if(!res) return onError()
       console.log('応答', res)
       const hiragana = await convertKanjiToHiragana({res})
@@ -74,6 +77,9 @@ export default function Home() {
       setAnswer(res)
       setIsPlay(true)
       const voiceResult = await playVoice({voice})
+      if(!voiceResult) {
+        onError()
+      }
       setIsPlay(false)
       setIsProcess(false)
     } catch(e) {

@@ -15,7 +15,7 @@ const playVoice = async ({voice}) => {
   } catch (error) {
     console.log('sound error', error);
     await soundObjectCheck.unloadAsync();
-    return true
+    return null
   }
 }
 

@@ -15,7 +15,30 @@ const textFlatten = ({results}) => {
 }
 
 const textMerge = ({text}) => {
-  return `${text}。くだらないしつもんでおわっちゃったね。また。`
+  const extraOn = false
+  const extraText = extraOn?'くだらないしつもんでおわっちゃったね。また。':''
+  return `${text}${extraText}`
+}
+
+const getAbeAnswer = async({message}) => {
+  try {
+    const res = await axios.post(
+      'https://webapi-test-omc3n2et7a-an.a.run.app',
+      {
+        'data': message
+      },
+      {
+        headers: {
+          "Content-Type" : "application/json; charset=utf-8"
+        }
+      }
+    )
+    const response = textMerge({text: res.data})
+    return response
+  } catch(e) {
+    console.log('error getAbeAnswer', e)
+    return null
+  }
 }
 
 const generateAnswer = async({message}) => {
@@ -55,7 +78,7 @@ const convertKanjiToHiragana = async({res}) => {
       }
     )
     const result = response.data.result.word
-    const res2 = result.map(item => item.furigana)
+    const res2 = result.map(item => item.furigana).filter(v => v)
     const response2 = res2.join().replace(/,/g, '')
     return response2
   } catch (e) {
@@ -100,30 +123,66 @@ const getVoicePolling = async({uuid}) => {
     return res1
   } else {
     console.log('sleep 1')
-    await sleeping(1*1000);
+    await sleeping(2*1000);
     const res2 = await getVoice({uuid})
     if(res2) {
       return res2
     } else {
       console.log('sleep 2')
-      await sleeping(1*1000);
+      await sleeping(2*1000);
       const res3 = await getVoice({uuid})
       if(res3) {
         return res3
       } else {
         console.log('sleep 3')
-        await sleeping(1*1000);
+        await sleeping(2*1000);
         const res4 = await getVoice({uuid})
         if(res4) {
           return res4
         } else {
           console.log('sleep 4')
-          await sleeping(1*1000);
+          await sleeping(2*1000);
           const res5 = await getVoice({uuid})
           if(res5) {
             return res5
           } else {
-            return null
+            console.log('sleep 5')
+            await sleeping(2*1000);
+            const res6 = await getVoice({uuid})
+            if(res6) {
+              return res6
+            } else {
+              console.log('sleep 6')
+              await sleeping(2*1000);
+              const res7 = await getVoice({uuid})
+              if(res7) {
+                return res7
+              } else {
+                console.log('sleep 7')
+                await sleeping(2*1000);
+                const res8 = await getVoice({uuid})
+                if(res8) {
+                  return res8
+                } else {
+                  console.log('sleep 8')
+                  await sleeping(2*1000);
+                  const res9 = await getVoice({uuid})
+                  if(res9) {
+                    return res9
+                  } else {
+                    console.log('sleep 9')
+                    await sleeping(2*1000);
+                    const res10 = await getVoice({uuid})
+                    if(res10) {
+                      return res10
+                    } else {
+                      console.log('polling time out')
+                      return null
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -160,4 +219,5 @@ export {
   textFlatten,
   convertKanjiToHiragana,
   getVoicePolling,
+  getAbeAnswer
 }
