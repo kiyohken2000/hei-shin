@@ -10,7 +10,9 @@ const colors = {
   red: '#ff0000',
   lightsteelblue: '#b0c4de',
   mediumseagreen: '#3cb371',
-  seagreen: '#2e8b57'
+  seagreen: '#2e8b57',
+  mediumvioletred: '#c71585',
+  deeppink: '#ff1493'
 }
 
 export default colors

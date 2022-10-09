@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Hey Shin-san",
+    "name": "Hey 晋さん",
     "slug": "hei-shin-san",
     "privacy": "public",
     "platforms": [
@@ -23,7 +23,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "net.votepurchase.heyshinsan",
       "buildNumber": "1.0.0",
       "infoPlist": {
@@ -38,7 +38,9 @@
       "permissions": [
         "VIBRATE",
         "CAMERA",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "RECORD_AUDIO",
+        "com.google.android.googlequicksearchbox"
       ]
     },
     "packagerOpts": {
@@ -55,8 +57,8 @@
       [
         "@react-native-voice/voice",
         {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
-          "speechRecogntionPermission": "Allow $(PRODUCT_NAME) to securely recognize user speech"
+          "microphonePermission": "このアプリは音声認識のためにマイクを使用します",
+          "speechRecogntionPermission": "このアプリはAIからの応答を作成するために音声認識を使用します"
         }
       ]
     ],

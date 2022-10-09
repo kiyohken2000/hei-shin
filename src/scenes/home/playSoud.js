@@ -11,11 +11,9 @@ const playVoice = async ({voice}) => {
       uri: voice
     });
     await soundObjectCheck.playAsync();
-    return true
   } catch (error) {
     console.log('sound error', error);
     await soundObjectCheck.unloadAsync();
-    return null
   }
 }
 
@@ -28,11 +26,9 @@ const playError = async () => {
     });
     await soundObjectCheck.loadAsync(require("../../../assets/sound/error.wav"));
     await soundObjectCheck.playAsync();
-    return true
   } catch (error) {
     console.log('sound error', error);
     await soundObjectCheck.unloadAsync();
-    return true
   }
 }
 

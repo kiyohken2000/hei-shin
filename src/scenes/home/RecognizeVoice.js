@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { colors, fontSize } from 'theme'
 
 export default function RecognizeVoice(props) {
@@ -11,11 +11,12 @@ export default function RecognizeVoice(props) {
         <Text style={styles.headerText}>早く質問しろよ</Text>
       </View>
       <View style={styles.recognizeArea}>
-        <View style={styles.recognizeContainer}>
+        <ScrollView style={styles.recognizeContainer}>
           {results.map((result, index) => {
             return <Text key={`result-${index}`} style={styles.recognizeText}>{result}</Text>;
           })}
-        </View>
+          <View style={{paddingVertical: 10}} />
+        </ScrollView>
       </View>
     </View>
   )
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    paddingBottom: 30
+    paddingVertical: 20
   },
   headerText: {
     fontSize: fontSize.xxLarge
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 10
   },

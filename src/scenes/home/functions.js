@@ -14,10 +14,39 @@ const textFlatten = ({results}) => {
   return res
 }
 
-const textMerge = ({text}) => {
+const apiRequest = async({origin}) => {
+  try {
+    console.log('origin', origin)
+    const { originText, romaji } = await getAbeAnswer({message: origin})
+    console.log('originText', originText)
+    console.log('romaji', romaji)
+    const uuid = await generateVoice({text: romaji})
+    console.log('uuid', uuid)
+    const voiceUrl = await getVoicePolling({uuid})
+    console.log('voiceUrl', voiceUrl)
+    return {
+      answerText: originText,
+      voiceUrl: voiceUrl
+    }
+  } catch(e) {
+    console.log(e)
+    return null
+  }
+}
+
+const textMerge = ({origin, noSpaceRomaji}) => {
+  // 「くだらない質問で終わっちゃったね。また」をつけるかどうか
   const extraOn = false
-  const extraText = extraOn?'くだらないしつもんでおわっちゃったね。また。':''
-  return `${text}${extraText}`
+  const extraText = extraOn?'くだらない質問で終わっちゃったね。また。':''
+  const extraRomaji = extraOn?'.kudaranaishItsumoNdeowaclchacltanepaumata':''
+  return {
+    mergedOrigin: `${origin}${extraText}`,
+    mergedRomaji: `${noSpaceRomaji}${extraRomaji}`
+  }
+}
+
+const removeSpace = ({romaji}) => {
+  return romaji.replace(/ /g, '')
 }
 
 const getAbeAnswer = async({message}) => {
@@ -33,63 +62,17 @@ const getAbeAnswer = async({message}) => {
         }
       }
     )
-    const response = textMerge({text: res.data})
-    return response
+    const { origin, romaji } = res.data
+    const noSpaceRomaji = removeSpace({romaji})
+    const { mergedOrigin, mergedRomaji } = textMerge({origin, noSpaceRomaji})
+    return {
+      originText: mergedOrigin,
+      romaji: mergedRomaji
+    }
   } catch(e) {
     console.log('error getAbeAnswer', e)
     return null
   }
-}
-
-const generateAnswer = async({message}) => {
-  try {
-    const form = new FormData();
-    form.append('apikey', key.A3RT);
-    form.append('query', message);
-    const response = await axios.post(
-      'https://api.a3rt.recruit.co.jp/talk/v1/smalltalk',
-      form
-    )
-    const res = textMerge({text: response.data.results[0].reply})
-    return res
-  } catch(e) {
-    console.log('error generateAnswer', e)
-    return null
-  }
-}
-
-const convertKanjiToHiragana = async({res}) => {
-  try {
-    const response = await axios.post(
-      "https://jlp.yahooapis.jp/FuriganaService/V2/furigana",
-      {
-        "id": "1",
-        "jsonrpc": "2.0",
-        "method": "jlp.furiganaservice.furigana",
-        "params": {
-          "q": res
-        }
-      },
-      {
-        headers: {
-          "User-Agent" : `Yahoo AppID: ${key.yahooClientID}`,
-          "Content-Type" : "application/json; charset=utf-8"
-        }
-      }
-    )
-    const result = response.data.result.word
-    const res2 = result.map(item => item.furigana).filter(v => v)
-    const response2 = res2.join().replace(/,/g, '')
-    return response2
-  } catch (e) {
-    console.log('error convertKanjiToHiragana', e)
-    return null
-  }
-}
-
-const convertNihongoToRomaji = async({text}) => {
-  const res = kanaToRomaji(text)
-  return res
 }
 
 const generateVoice = async({text}) => {
@@ -97,7 +80,7 @@ const generateVoice = async({text}) => {
     const response = await axios.post(
       'https://api.uberduck.ai/speak',
       {
-        'pace': 0.5,
+        'pace': 1,
         'voicemodel_uuid': key.voiceModelUUID,
         'speech': text
       },
@@ -212,12 +195,6 @@ const getVoice = async({uuid}) => {
 }
 
 export {
-  generateAnswer,
-  convertNihongoToRomaji,
-  generateVoice,
-  getVoice,
   textFlatten,
-  convertKanjiToHiragana,
-  getVoicePolling,
-  getAbeAnswer
+  apiRequest
 }

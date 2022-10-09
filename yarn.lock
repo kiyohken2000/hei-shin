@@ -6933,7 +6933,12 @@ expo-asset@~8.6.1:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
-expo-av@~12.0.4:
+expo-audio-hooks@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/expo-audio-hooks/-/expo-audio-hooks-1.0.3.tgz#b232d7d11a280142b0ac21a371ba7376f0b0f8a8"
+  integrity sha512-0NlZyzpP+7fKtyJxsl7LoVt+5DfwkRVmAZXYoStiAz1oQjCSiJDrDnXp9KHHvTfXKql3Uxq8PAt640u5SYZLfQ==
+
+expo-av@^12.0.4:
   version "12.0.4"
   resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-12.0.4.tgz#00cf2da76c0c718a1d316f188247dee85ce512c2"
   integrity sha512-wq3wx6J1aacZEPZce9TK1+o4YTAOWyb5cJ4CqfsgHcXeUdHyO3qbva/5uecigpEYlCxOlWYFhAz2T0dQ7nWSpQ==

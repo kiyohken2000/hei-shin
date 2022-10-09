@@ -4,14 +4,16 @@ import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { generateAnswer, convertNihongoToRomaji, generateVoice, getAbeAnswer, textFlatten, convertKanjiToHiragana, getVoicePolling } from './functions'
+import { textFlatten, apiRequest } from './functions'
 import { playVoice, playError } from './playSoud'
 import Voice, {
   SpeechResultsEvent,
   SpeechErrorEvent,
 } from "@react-native-voice/voice";
 import RecognizeVoice from './RecognizeVoice'
-import Buttons from './Buttons'
+import Answer from './Answer'
+import Recording from './Recording'
+import PlayVoice from './PlayVoice'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -20,7 +22,7 @@ export default function Home() {
   const [isListening, setIsListening] = useState(false);
   const [answer, setAnswer] = useState('')
   const [isProcess, setIsProcess] = useState(false)
-  const [isPlay, setIsPlay] = useState(false)
+  const [voiceSource, setVoiceSource] = useState('')
  
   useEffect(() => {
     function onSpeechResults(e) {
@@ -28,7 +30,6 @@ export default function Home() {
     }
     function onSpeechError(e) {
       console.log(e);
-      setIsPlay(false)
       setIsProcess(false)
     }
     Voice.onSpeechError = onSpeechError;
@@ -43,7 +44,8 @@ export default function Home() {
       if (isListening) {
         await Voice.stop();
         const origin = textFlatten({results})
-        await apiRequest({origin})
+        setVoiceSource('')
+        await onRequest({origin})
         setIsListening(false);
       } else {
         setResults([]);
@@ -55,32 +57,13 @@ export default function Home() {
     }
   }
 
-  const apiRequest  = async({origin}) => {
+  const onRequest = async({origin}) => {
     try {
-      if(!origin) return
       setIsProcess(true)
-      const res = await getAbeAnswer({message: origin})
-      if(!res) return onError()
-      console.log('応答', res)
-      const hiragana = await convertKanjiToHiragana({res})
-      if(!hiragana) return onError()
-      console.log('ひらがな', hiragana)
-      const romaji = await convertNihongoToRomaji({text: hiragana})
-      if(!romaji) return onError()
-      console.log('ローマ字', romaji)
-      const uuid = await generateVoice({text: romaji})
-      if(!uuid) return onError()
-      console.log('UUID', uuid)
-      const voice = await getVoicePolling({uuid})
-      if(!voice) return onError()
-      console.log('Voice URL', voice)
-      setAnswer(res)
-      setIsPlay(true)
-      const voiceResult = await playVoice({voice})
-      if(!voiceResult) {
-        onError()
-      }
-      setIsPlay(false)
+      const { answerText, voiceUrl } = await apiRequest({origin})
+      if(!answerText || !voiceUrl) return onError()
+      setAnswer(answerText)
+      setVoiceSource(voiceUrl)
       setIsProcess(false)
     } catch(e) {
       onError()
@@ -88,11 +71,9 @@ export default function Home() {
   }
 
   const onError = async() => {
-    setIsPlay(true)
     setAnswer('すみません。よくわかりませんでした。すみませんって言ってるじゃないか')
-    const voiceResult = await playError()
+    await playError()
     setIsProcess(false)
-    setIsPlay(false)
   }
   
   return (
@@ -101,14 +82,23 @@ export default function Home() {
         <View style={styles.textArea}>
           <RecognizeVoice results={results} />
         </View>
+        <View style={styles.answerArea}>
+          <Answer answer={answer} />
+        </View>
         <View style={styles.buttonArea}>
-          <Buttons
-            isListening={isListening}
-            onPress={toggleListening}
-            answer={answer}
-            isProcess={isProcess}
-            isPlay={isPlay}
-          />
+          {!voiceSource?
+            <Recording
+              isListening={isListening}
+              onPress={toggleListening}
+              isProcess={isProcess}
+            />
+            :
+            <PlayVoice
+              voiceSource={voiceSource}
+              setVoiceSource={setVoiceSource}
+              setAnswer={setAnswer}
+            />
+          }
         </View>
       </View>
     </ScreenTemplate>
@@ -126,8 +116,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  buttonArea: {
+  answerArea: {
     flex: 2,
+    width: '100%',
+  },
+  buttonArea: {
+    flex: 0.7,
     width: '100%',
   }
 })
