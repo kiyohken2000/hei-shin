@@ -17,9 +17,10 @@ const textFlatten = ({results}) => {
 const apiRequest = async({origin}) => {
   try {
     console.log('origin', origin)
-    const { originText, romaji } = await getAbeAnswer({message: origin})
+    const { originText, romaji, question } = await getAbeAnswer({message: origin})
     console.log('originText', originText)
     console.log('romaji', romaji)
+    console.log('question', question)
     const uuid = await generateVoice({text: romaji})
     console.log('uuid', uuid)
     const voiceUrl = await getVoicePolling({uuid})
@@ -62,12 +63,13 @@ const getAbeAnswer = async({message}) => {
         }
       }
     )
-    const { origin, romaji } = res.data
+    const { origin, romaji, question } = res.data
     const noSpaceRomaji = removeSpace({romaji})
     const { mergedOrigin, mergedRomaji } = textMerge({origin, noSpaceRomaji})
     return {
       originText: mergedOrigin,
-      romaji: mergedRomaji
+      romaji: mergedRomaji,
+      question: question
     }
   } catch(e) {
     console.log('error getAbeAnswer', e)
