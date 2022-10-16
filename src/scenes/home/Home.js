@@ -26,7 +26,7 @@ export default function Home() {
  
   useEffect(() => {
     function onSpeechResults(e) {
-      setResults(e.value ?? []);
+      setResults([e.value[0]] ?? []);
     }
     function onSpeechError(e) {
       console.log('onSpeechError', e);
@@ -52,9 +52,8 @@ export default function Home() {
     try {
       if (isListening) {
         await Voice.stop();
-        const result = [results[0]]
-        setResults(result)
-        const origin = textFlatten({results: result})
+        setResults(results)
+        const origin = textFlatten({results})
         setVoiceSource('')
         await onRequest({origin})
         setIsListening(false);
