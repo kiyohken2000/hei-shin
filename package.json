@@ -1,10 +1,9 @@
 {
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "npx expo start --dev-client",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "node_modules/.bin/eslint src/ --fix src/ --fix",
@@ -40,7 +39,7 @@
     "prop-types": "^15.7.2",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-native": "0.69.5",
+    "react-native": "0.69.6",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-pager-view": "5.4.24",
     "react-native-paper": "5.0.0-rc.6",
@@ -54,7 +53,9 @@
     "react-native-web": "~0.18.7",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "expo-splash-screen": "~0.16.2",
+    "expo-status-bar": "~1.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -74,7 +75,8 @@
     "lint-staged": "^10.2.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "@babel/core": "^7.12.9"
   },
   "prettier": {
     "trailingComma": "all",
@@ -89,5 +91,7 @@
       "yarn lint",
       "yarn test"
     ]
-  }
+  },
+  "name": "hei-shin",
+  "version": "1.0.0"
 }

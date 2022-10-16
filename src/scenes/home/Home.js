@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, Platform } from 'react-native'
 import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
@@ -29,8 +29,9 @@ export default function Home() {
       setResults(e.value ?? []);
     }
     function onSpeechError(e) {
-      console.log(e);
-      setIsProcess(false)
+      console.log('onSpeechError', e);
+      destroyRecognizer()
+      //setIsProcess(false)
     }
     Voice.onSpeechError = onSpeechError;
     Voice.onSpeechResults = onSpeechResults;
@@ -39,11 +40,21 @@ export default function Home() {
     };
   }, []);
 
+  const destroyRecognizer = async () => {
+    try {
+      await Voice.destroy();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const toggleListening = async() => {
     try {
       if (isListening) {
         await Voice.stop();
-        const origin = textFlatten({results})
+        const result = [results[0]]
+        setResults(result)
+        const origin = textFlatten({results: result})
         setVoiceSource('')
         await onRequest({origin})
         setIsListening(false);
