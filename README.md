@@ -1,3 +1,4 @@
+```
 // ビルド:開発用バイナリ
 eas build --profile development --platform ios
 eas build --profile development --platform android
@@ -18,3 +19,6 @@ expo publish --release-channel production
 eas device:create
 // 登録済みiPhoneの表示
 eas device:list
+```
+
+Android更新時は`android\app\build.gradle`のバージョン番号も書き換える
