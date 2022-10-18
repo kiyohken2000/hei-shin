@@ -5,7 +5,7 @@ import VoiceLoading from "./VoiceLoading";
 import PlayVoiceButtons from "./PlayVoiceButtons";
 
 export default function PlayVoice(props) {
-  const { voiceSource, setVoiceSource, setAnswer } = props
+  const { voiceSource, setVoiceSource, setAnswer, incrementKey } = props
   const sound = useRef(new Audio.Sound());
   const [isLoading, setIsLoading] = useState(true)
 
@@ -51,7 +51,7 @@ export default function PlayVoice(props) {
   return (
     <View style={styles.container}>
       {isLoading?
-        <VoiceLoading / >
+        <VoiceLoading incrementKey={incrementKey} />
         :
         <PlayVoiceButtons
           onStopPress={onStopPress}

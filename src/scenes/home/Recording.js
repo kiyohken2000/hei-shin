@@ -7,7 +7,7 @@ import Loading from './Loading';
 const { height, width } = Dimensions.get('window')
 
 export default function Recording(props) {
-  const { onPress, isListening, isProcess } = props
+  const { onPress, isListening, isProcess, incrementKey } = props
   const icon = !isListening?"microphone":'stop'
   const buttonColor = !isListening?colors.seagreen:colors.red
 
@@ -27,7 +27,7 @@ export default function Recording(props) {
           </TouchableOpacity>
         </View>
         :
-        <Loading />
+        <Loading incrementKey={incrementKey} />
       }
     </View>
   )
