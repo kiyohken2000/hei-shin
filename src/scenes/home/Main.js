@@ -103,6 +103,7 @@ export default function Main(props) {
               onPress={toggleListening}
               isProcess={isProcess}
               incrementKey={incrementKey}
+              results={results}
             />
             :
             <PlayVoice

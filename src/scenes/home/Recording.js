@@ -3,13 +3,15 @@ import { View, StyleSheet, TouchableOpacity, Dimensions, Text, ScrollView } from
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors, fontSize } from 'theme'
 import Loading from './Loading';
+import { textFlatten } from './functions';
 
 const { height, width } = Dimensions.get('window')
 
 export default function Recording(props) {
-  const { onPress, isListening, isProcess, incrementKey } = props
+  const { onPress, isListening, isProcess, incrementKey, results } = props
   const icon = !isListening?"microphone":'stop'
   const buttonColor = !isListening?colors.seagreen:colors.red
+  const questionString = textFlatten({results})
 
   return (
     <View style={styles.buuttonArea}>
@@ -18,6 +20,7 @@ export default function Recording(props) {
           <TouchableOpacity
             style={[styles.button, {backgroundColor: buttonColor}]}
             onPress={onPress}
+            disabled={isListening && questionString === ''}
           >
             <FontIcon
               name={icon}
