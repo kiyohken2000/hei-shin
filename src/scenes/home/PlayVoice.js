@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Audio } from 'expo-av';
 import VoiceLoading from "./VoiceLoading";
 import PlayVoiceButtons from "./PlayVoiceButtons";
+import { textFlatten } from "./functions";
+import { doc, collection, serverTimestamp, setDoc } from "firebase/firestore";
+import { firestore } from "../../firebase";
+import Toast from 'react-native-toast-message';
 
 export default function PlayVoice(props) {
-  const { voiceSource, setVoiceSource, setAnswer, incrementKey } = props
+  const { voiceSource, setVoiceSource, setAnswer, incrementKey, results, answer } = props
   const sound = useRef(new Audio.Sound());
   const [isLoading, setIsLoading] = useState(true)
+  const [isUploadDisable, setIsUploadDisable] = useState(false)
 
   useEffect(() => {
     playSound()
@@ -48,6 +53,27 @@ export default function PlayVoice(props) {
     playSound()
   }
 
+  const onUpload = async() => {
+    try {
+      setIsUploadDisable(true)
+      const question = textFlatten({results})
+      const talkCollectionRef = doc(collection(firestore, 'talk'));
+      await setDoc(talkCollectionRef, {
+        question: question,
+        voiceSource: voiceSource,
+        answer: answer,
+        id: talkCollectionRef.id,
+        timpstamp: serverTimestamp(),
+      });
+      Toast.show({
+        type: 'success',
+        text1: '保存しました',
+      });
+    } catch(e) {
+      console.log('onUpload error', e)
+    }
+  }
+
   return (
     <View style={styles.container}>
       {isLoading?
@@ -56,6 +82,8 @@ export default function PlayVoice(props) {
         <PlayVoiceButtons
           onStopPress={onStopPress}
           onRepeat={onRepeat}
+          onUpload={onUpload}
+          isUploadDisable={isUploadDisable}
         />
       }
     </View>

@@ -5,43 +5,30 @@ import { colors, fontSize } from "../../theme";
 
 const { height, width } = Dimensions.get('window')
 
-export default function PlayVoiceButtons(props) {
-  const { onStopPress, onRepeat, onUpload, isUploadDisable } = props
+export default function PlayButton(props) {
+  const { onPress, onStop } = props
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
+          style={[styles.button, {backgroundColor: colors.mediumvioletred}]}
+          onPress={onPress}
+        >
+          <FontIcon
+            name='play'
+            color={colors.white}
+            size={width * 0.1}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
           style={[styles.button, {backgroundColor: colors.purple}]}
-          onPress={onStopPress}
+          onPress={onStop}
         >
           <FontIcon
             name='stop'
-            color={colors.white}
-            size={width * 0.1}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: colors.mediumvioletred}]}
-          onPress={onRepeat}
-        >
-          <FontIcon
-            name='redo'
-            color={colors.white}
-            size={width * 0.1}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: colors.mediumseagreen, opacity: !isUploadDisable?1.0:0.3}]}
-          onPress={onUpload}
-          disabled={isUploadDisable}
-        >
-          <FontIcon
-            name='cloud-upload-alt'
             color={colors.white}
             size={width * 0.1}
           />

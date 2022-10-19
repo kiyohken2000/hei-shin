@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import { createStackNavigator } from '@react-navigation/stack'
 import { HomeTitleContext } from "../../../contexts/HomeTitleContext";
 
-import Modal from '../../../scenes/modal/Modal'
-import Print from '../../../scenes/print/Print'
+import History from "../../../scenes/history/History";
+import HistoryDetail from "../../../scenes/historyDetail/HistoryDetail";
 
 const Stack = createStackNavigator()
 
@@ -25,16 +25,20 @@ export const ModalStacks = () => {
             }}
           >
             <Stack.Screen
-              name='Modal'
-              component={Modal}
+              name='History'
+              component={History}
               options={{
-                title: ctx.title,
-                headerBackTitle: '戻る',
+                title: '過去の質問',
+                headerBackTitleVisible: false,
               }}
             />
             <Stack.Screen
-              name='Print'
-              component={Print}
+              name='HistoryDetail'
+              component={HistoryDetail}
+              options={{
+                title: '過去の質問',
+                headerBackTitleVisible: false,
+              }}
             />
           </Stack.Navigator>
       )}

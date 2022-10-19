@@ -3,8 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { navigationProps } from './navigationProps/navigationProps'
 
 import Home from '../../../scenes/home'
-import Details from '../../../scenes/details'
-import Menu from '../../../scenes/menu/Menu'
 
 const Stack = createStackNavigator()
 
@@ -22,27 +20,6 @@ export const HomeStacks = () => {
           headerShown: false
         })}
       />
-      <Stack.Screen
-        name="Details"
-        component={Details}
-        options={({ navigation }) => ({
-          title: 'Details',
-        })}
-      />
-      <Stack.Group
-        screenOptions={{
-          presentation: 'modal',
-          headerShown: false
-        }}
-      >
-        <Stack.Screen
-          name="Menu"
-          component={Menu}
-          options={({ navigation }) => ({
-            title: 'Menu',
-          })}
-        />
-      </Stack.Group>
     </Stack.Navigator>
   )
 }

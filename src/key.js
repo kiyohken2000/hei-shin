@@ -6,4 +6,14 @@ const key = {
   yahooClientID: 'dj00aiZpPUFQMUlhR2xIeGpaQSZzPWNvbnN1bWVyc2VjcmV0Jng9YWM-'
 }
 
-export { key }
+const firebaseConfig = {
+  apiKey: "AIzaSyAQtvfUNSrss6k7k7gzUlsrksUkD3drWP0",
+  authDomain: "hey-abe.firebaseapp.com",
+  projectId: "hey-abe",
+  storageBucket: "hey-abe.appspot.com",
+  messagingSenderId: "1024868641007",
+  appId: "1:1024868641007:web:222d16e11e923c7aa0531a",
+  measurementId: "G-XPVTM9VMVC"
+};
+
+export { key, firebaseConfig }

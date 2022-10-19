@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
+import LoadingScreen from "./LoadingScreen";
+import ErrorScreen from "./ErrorScreen";
 
 export default function ScreenTemplate(props) {
-  const { screen, statusBar } = props
+  const { screen, statusBar, isLoading, isError } = props
   const [barStyle, setBarStyle] = useState('')
   const [trigger, setTorigger] = useState(0)
 
@@ -17,6 +19,14 @@ export default function ScreenTemplate(props) {
   useEffect(() => {
     setBarStyle(statusBar)
   }, [trigger])
+
+  if(isLoading) {
+    return <LoadingScreen />
+  }
+
+  if(isError) {
+    return <ErrorScreen />
+  }
 
   return (
     <SafeAreaView style={styles.container}>

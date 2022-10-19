@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, Platform } from 'react-native'
-import { colors, fontSize } from 'theme'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
@@ -111,6 +110,8 @@ export default function Main(props) {
               setVoiceSource={setVoiceSource}
               setAnswer={setAnswer}
               incrementKey={incrementKey}
+              results={results}
+              answer={answer}
             />
           }
         </View>

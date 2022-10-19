@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { colors, fontSize } from 'theme'
-import HeaderTitle from './HeaderTitle';
+import React from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { fontSize, colors } from "../../theme";
+import { noribenGenerater } from "./functions";
 
-export default function RecognizeVoice(props) {
-  const { results } = props
+export default function Question(props) {
+  const { question } = props
+  const noriben = noribenGenerater({question})
 
   return (
     <View style={styles.container}>
-      <HeaderTitle />
       <View style={styles.recognizeArea}>
         <ScrollView style={styles.recognizeContainer}>
-          {results.map((result, index) => {
-            return <Text key={`result-${index}`} style={styles.recognizeText}>{result}</Text>;
-          })}
+          <Text style={styles.recognizeText}>{noriben}</Text>
           <View style={{paddingVertical: 10}} />
         </ScrollView>
       </View>
@@ -26,7 +24,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20
   },
   recognizeArea: {
     flex: 4,

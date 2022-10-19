@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "net.votepurchase.heyshinsan",
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar.",
         "NSMicrophoneUsageDescription": "このアプリは音声認識のためにマイクを使用します",
@@ -52,7 +52,8 @@
         "jsx",
         "svg",
         "ts",
-        "tsx"
+        "tsx",
+        "cjs"
       ]
     },
     "plugins": [

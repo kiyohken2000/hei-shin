@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
+import { Platform } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack'
-import TabNavigator from "./tabs/Tabs";
-import Post from "../../scenes/post/Post";
 import { HomeTitleContext } from "../../contexts/HomeTitleContext";
 import { ModalStacks } from "./stacks/ModalStacks";
 import { TransitionPresets } from "@react-navigation/stack";
@@ -11,6 +10,7 @@ const Stack = createStackNavigator()
 
 export default function RootStack() {
   const [title, setTitle] = useState('default title')
+  const isIos = Platform.OS === 'ios'
 
   return (
     <HomeTitleContext.Provider
@@ -30,6 +30,21 @@ export default function RootStack() {
               name='HomeRoot'
               component={HomeStacks}
             />
+            <Stack.Group
+              screenOptions={{
+                presentation: 'modal',
+                headerShown: false,
+                gestureEnabled: true,
+                cardOverlayEnabled: true,
+                ...TransitionPresets.ModalPresentationIOS,
+                gestureEnabled: isIos
+              }}
+            >
+              <Stack.Screen
+                name='ModalStacks'
+                component={ModalStacks}
+              />
+            </Stack.Group>
           </Stack.Navigator>
       )}
       </HomeTitleContext.Consumer>
