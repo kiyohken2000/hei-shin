@@ -7,7 +7,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/logo-sm.png",
     "splash": {
@@ -27,6 +27,7 @@
       "bundleIdentifier": "net.votepurchase.heyshinsan",
       "buildNumber": "1.0.3",
       "infoPlist": {
+        "CFBundleDevelopmentRegion": "ja_JP",
         "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar.",
         "NSMicrophoneUsageDescription": "このアプリは音声認識のためにマイクを使用します",
         "NSSpeechRecognitionUsageDescription": "このアプリはAIからの応答を作成するために音声認識を使用します"
@@ -35,7 +36,7 @@
     },
     "android": {
       "package": "net.votepurchase.heyshinsan",
-      "versionCode": 3,
+      "versionCode": 6,
       "userInterfaceStyle": "automatic",
       "permissions": [
         "VIBRATE",

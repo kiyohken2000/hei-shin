@@ -13,19 +13,21 @@ export default function History() {
   const [isError, setIsError] = useState(false)
 
   useEffect(() => {
-    try {
-      setIsLoading(true)
-      const talkCollectionRef = collection(firestore, 'talk');
-      const q = query(talkCollectionRef, orderBy("timpstamp", "desc"), limit(100))
-      getDocs(q).then((querySnapshot) => {
+    const fetchData = async() => {
+      try {
+        setIsLoading(true)
+        const talkCollectionRef = collection(firestore, 'talk');
+        const q = query(talkCollectionRef, orderBy("timpstamp", "desc"), limit(100))
+        const querySnapshot = await getDocs(q)
         setTalks(querySnapshot.docs.map((doc) => doc.data()));
-      });
-    } catch(e) {
-      console.log('firebase get error', e)
-      setIsError(true)
-    } finally {
-      setIsLoading(false)
+      } catch(e) {
+        console.log('firebase get error', e)
+        setIsError(true)
+      } finally {
+        setIsLoading(false)
+      }
     }
+    fetchData()
   }, []);
 
   const onPress = ({item}) => {
