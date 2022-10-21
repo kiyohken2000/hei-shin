@@ -7,7 +7,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/logo-sm.png",
     "splash": {
@@ -36,7 +36,7 @@
     },
     "android": {
       "package": "net.votepurchase.heyshinsan",
-      "versionCode": 7,
+      "versionCode": 8,
       "userInterfaceStyle": "automatic",
       "permissions": [
         "VIBRATE",
