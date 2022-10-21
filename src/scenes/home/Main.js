@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textArea: {
-    flex: 1,
+    flex: 1.5,
     width: '100%',
   },
   answerArea: {

@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity, Dimensions, Text, ScrollView } from "react-native";
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import React from 'react'
+import { View, StyleSheet } from "react-native";
 import { colors, fontSize } from 'theme'
 import Loading from './Loading';
 import { textFlatten } from './functions';
-
-const { height, width } = Dimensions.get('window')
+import ActionButton from '../../components/ActionButton';
 
 export default function Recording(props) {
   const { onPress, isListening, isProcess, incrementKey, results } = props
@@ -16,19 +14,12 @@ export default function Recording(props) {
   return (
     <View style={styles.buuttonArea}>
       {!isProcess?
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, {backgroundColor: buttonColor}]}
-            onPress={onPress}
-            disabled={isListening && questionString === ''}
-          >
-            <FontIcon
-              name={icon}
-              color={colors.white}
-              size={width * 0.15}
-            />
-          </TouchableOpacity>
-        </View>
+        <ActionButton
+          icon={icon}
+          color={buttonColor}
+          onPress={onPress}
+          isDisable={isListening && questionString === ''}
+        />
         :
         <Loading incrementKey={incrementKey} />
       }
@@ -36,32 +27,10 @@ export default function Recording(props) {
   )
 }
 
-const widthRation = width * 0.3
 const styles = StyleSheet.create({
   buuttonArea: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  button: {
-    backgroundColor: 'green',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: widthRation,
-    height: widthRation,
-    borderRadius: widthRation /2,
-    borderWidth: 1
-  },
-  buttonContainer: {
-    backgroundColor: colors.lightGrayPurple,
-    width: widthRation + 10,
-    height: widthRation + 10,
-    borderRadius: widthRation + 10 /2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    borderColor: colors.black,
-    borderWidth: 1
   },
 })

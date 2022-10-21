@@ -1,82 +1,38 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import { View, StyleSheet } from "react-native";
 import { colors, fontSize } from "../../theme";
-
-const { height, width } = Dimensions.get('window')
+import ActionButton from "../../components/ActionButton";
 
 export default function PlayVoiceButtons(props) {
   const { onStopPress, onRepeat, onUpload, isUploadDisable } = props
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: colors.purple}]}
-          onPress={onStopPress}
-        >
-          <FontIcon
-            name='stop'
-            color={colors.white}
-            size={width * 0.1}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: colors.mediumvioletred}]}
-          onPress={onRepeat}
-        >
-          <FontIcon
-            name='redo'
-            color={colors.white}
-            size={width * 0.1}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: colors.mediumseagreen, opacity: !isUploadDisable?1.0:0.3}]}
-          onPress={onUpload}
-          disabled={isUploadDisable}
-        >
-          <FontIcon
-            name='cloud-upload-alt'
-            color={colors.white}
-            size={width * 0.1}
-          />
-        </TouchableOpacity>
-      </View>
+      <ActionButton
+        icon='stop'
+        color={colors.purple}
+        onPress={onStopPress}
+      />
+      <ActionButton
+        icon='redo'
+        color={colors.mediumvioletred}
+        onPress={onRepeat}
+      />
+      <ActionButton
+        icon='cloud-upload-alt'
+        color={colors.mediumseagreen}
+        onPress={onUpload}
+        isDisable={isUploadDisable}
+      />
     </View>
   )
 }
 
-const widthRation = width * 0.2
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingHorizontal: 30,
     width: '100%',
     justifyContent: 'space-around'
-  },
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: widthRation,
-    height: widthRation,
-    borderRadius: widthRation /2,
-    borderWidth: 1
-  },
-  buttonContainer: {
-    backgroundColor: colors.lightGrayPurple,
-    width: widthRation + 10,
-    height: widthRation + 10,
-    borderRadius: widthRation + 10 /2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    borderColor: colors.black,
-    borderWidth: 1
   },
 })
