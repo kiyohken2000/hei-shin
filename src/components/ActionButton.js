@@ -13,6 +13,7 @@ export default function ActionButton(props) {
       <TouchableOpacity
         style={[styles.button, {backgroundColor: color, opacity:!isDisable?1.0:0.3}]}
         onPress={onPress}
+        disabled={isDisable}
       >
         <FontIcon
           name={icon}

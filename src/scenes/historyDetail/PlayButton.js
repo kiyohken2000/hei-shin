@@ -15,7 +15,7 @@ export default function PlayButton(props) {
       />
       <ActionButton
         icon='stop'
-        color={ colors.purple}
+        color={colors.purple}
         onPress={onStop}
       />
     </View>
