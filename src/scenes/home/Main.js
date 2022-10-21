@@ -5,10 +5,7 @@ import { UserContext } from '../../contexts/UserContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
 import { textFlatten, apiRequest } from './functions'
 import { playVoice, playError } from './playSoud'
-import Voice, {
-  SpeechResultsEvent,
-  SpeechErrorEvent,
-} from "@react-native-voice/voice";
+import Voice, { SpeechResultsEvent, SpeechErrorEvent } from "@react-native-voice/voice";
 import RecognizeVoice from './RecognizeVoice'
 import Answer from './Answer'
 import Recording from './Recording'
