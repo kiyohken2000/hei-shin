@@ -4,7 +4,7 @@ import { colors, fontSize } from "../../theme";
 import ActionButton from "../../components/ActionButton";
 
 export default function PlayButton(props) {
-  const { onPress, onStop } = props
+  const { onPress, onStop, isAvailable } = props
 
   return (
     <View style={styles.container}>
@@ -12,11 +12,13 @@ export default function PlayButton(props) {
         icon='play'
         color={colors.mediumvioletred}
         onPress={onPress}
+        isDisable={!isAvailable}
       />
       <ActionButton
         icon='stop'
         color={colors.purple}
         onPress={onStop}
+        isDisable={!isAvailable}
       />
     </View>
   )
