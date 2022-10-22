@@ -10,10 +10,12 @@ export default function PlayVoice(props) {
   const [isLoading, setIsLoading] = useState(false)
   const sound = useRef(new Audio.Sound());
   const [isAvailable, setIsAvailable] = useState(false)
+  const [isChecking, setIsChecking] = useState(false)
 
   useEffect(() => {
     const getVoice = async() => {
       try {
+        setIsChecking(true)
         const res = await axios.get(voiceSource)
         if(res.status === 200) {
           setIsAvailable(true)
@@ -23,6 +25,8 @@ export default function PlayVoice(props) {
       } catch(e) {
         console.log('voice wav not found', e)
         setIsAvailable(false)
+      } finally {
+        setIsChecking(false)
       }
     }
     getVoice()
@@ -66,6 +70,7 @@ export default function PlayVoice(props) {
           onPress={playSound}
           onStop={onStop}
           isAvailable={isAvailable}
+          isChecking={isChecking}
         />
       }
     </View>

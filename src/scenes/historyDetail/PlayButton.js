@@ -2,9 +2,16 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { colors, fontSize } from "../../theme";
 import ActionButton from "../../components/ActionButton";
+import Loading from "./Loading";
 
 export default function PlayButton(props) {
-  const { onPress, onStop, isAvailable } = props
+  const { onPress, onStop, isAvailable, isChecking } = props
+
+  if(isChecking) {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <View style={styles.container}>
