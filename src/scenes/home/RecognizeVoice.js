@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { colors, fontSize } from 'theme'
-import HeaderTitle from './HeaderTitle';
 
 export default function RecognizeVoice(props) {
   const { results } = props
