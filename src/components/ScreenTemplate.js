@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import LoadingScreen from "./LoadingScreen";
 import ErrorScreen from "./ErrorScreen";
+import { colors } from "../theme";
 
 export default function ScreenTemplate(props) {
   const { screen, statusBar, isLoading, isError } = props
@@ -38,6 +39,7 @@ export default function ScreenTemplate(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: colors.white
   }
 })

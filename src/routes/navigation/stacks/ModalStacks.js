@@ -22,6 +22,7 @@ export const ModalStacks = () => {
           <Stack.Navigator
             screenOptions={{
               headerShown: true,
+              headerShadowVisible: false,
             }}
           >
             <Stack.Screen

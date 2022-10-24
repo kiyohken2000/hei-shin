@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { StyleSheet, Dimensions, View } from "react-native"
 import LottieView from "lottie-react-native"
+import { colors } from '../theme'
 
 export default function LoadingScreen() {
   const animation = useRef(null);
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.white
   }
 });

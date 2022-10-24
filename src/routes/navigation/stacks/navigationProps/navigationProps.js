@@ -6,11 +6,12 @@ const headerMode = 'float'
 
 const navigationProps = {
   headerTintColor: headerTintColor,
-  headerStyle: { 
-    backgroundColor: colors.darkPurple
+  headerStyle: {
+    backgroundColor: colors.white
   },
-  headerTitleStyle: { fontSize: fontSize },
-  headerMode: headerMode
+  headerTitleStyle: { fontSize: fontSize, color: colors.black },
+  headerMode: headerMode,
+  headerShadowVisible: false,
 }
 
 export { navigationProps }

@@ -8,7 +8,6 @@ export default function RecognizeVoice(props) {
 
   return (
     <View style={styles.container}>
-      <HeaderTitle />
       <View style={styles.recognizeArea}>
         <ScrollView style={styles.recognizeContainer}>
           {results.map((result, index) => {
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20
   },
   recognizeArea: {
     flex: 4,

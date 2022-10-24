@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { navigationProps } from './navigationProps/navigationProps'
+import HeaderRightButton from './headerComponents/HeaderRightButton'
 
 import Home from '../../../scenes/home'
 
@@ -16,8 +17,9 @@ export const HomeStacks = () => {
         name="Home"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Home',
-          headerShown: false
+          title: '早く質問しろよ',
+          headerShown: true,
+          headerRight: () => <HeaderRightButton />,
         })}
       />
     </Stack.Navigator>
