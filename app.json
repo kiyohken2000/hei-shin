@@ -36,7 +36,7 @@
     },
     "android": {
       "package": "net.votepurchase.heyshinsan",
-      "versionCode": 10,
+      "versionCode": 11,
       "userInterfaceStyle": "automatic",
       "permissions": [
         "VIBRATE",
