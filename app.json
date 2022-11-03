@@ -7,7 +7,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/images/logo-sm.png",
     "splash": {
@@ -25,10 +25,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "net.votepurchase.heyshinsan",
-      "buildNumber": "1.0.3",
+      "buildNumber": "1.0.4",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ja_JP",
-        "NSPhotoLibraryUsageDescription": "Use the photo library to change your avatar.",
+        "NSPhotoLibraryUsageDescription": "画像を保存するためにフォトライブラリーを使用します",
         "NSMicrophoneUsageDescription": "このアプリは音声認識のためにマイクを使用します",
         "NSSpeechRecognitionUsageDescription": "このアプリはAIからの応答を作成するために音声認識を使用します"
       },
@@ -43,7 +43,9 @@
         "CAMERA",
         "android.permission.RECORD_AUDIO",
         "RECORD_AUDIO",
-        "com.google.android.googlequicksearchbox"
+        "com.google.android.googlequicksearchbox",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_MEDIA_LOCATION"
       ]
     },
     "packagerOpts": {
@@ -63,6 +65,14 @@
         {
           "microphonePermission": "このアプリは音声認識のためにマイクを使用します",
           "speechRecogntionPermission": "このアプリはAIからの応答を作成するために音声認識を使用します"
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "このアプリは画像を保存するためにフォトライブラリーを使用します",
+          "savePhotosPermission": "このアプリは画像を保存するためにフォトライブラリーを使用します",
+          "isAccessMediaLocationEnabled": true
         }
       ]
     ],

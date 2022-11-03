@@ -4,14 +4,11 @@ import FontIcon from 'react-native-vector-icons/FontAwesome'
 import { colors } from "../../../../theme";
 import { useNavigation } from '@react-navigation/native';
 
-export default function HeaderRightButton() {
+export default function HeaderLeftButton() {
   const navigation = useNavigation()
 
   const onButtonPress = () => {
-    navigation.navigate('ModalStacks', {
-      screen: 'Modal',
-      params: {}
-    })
+    navigation.openDrawer()
   }
   return (
     <TouchableOpacity
@@ -19,7 +16,7 @@ export default function HeaderRightButton() {
       style={styles.container}
     >
       <FontIcon
-        name='jsfiddle'
+        name='navicon'
         color={colors.black}
         size={23}
       />
@@ -29,6 +26,6 @@ export default function HeaderRightButton() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingRight: 20
+    paddingLeft: 20
   }
 })

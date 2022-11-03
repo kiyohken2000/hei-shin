@@ -6,7 +6,8 @@ const key = {
   yahooClientID: 'dj00aiZpPUFQMUlhR2xIeGpaQSZzPWNvbnN1bWVyc2VjcmV0Jng9YWM-'
 }
 
-const firebaseConfig = {
+// Project hey-abe
+/*const firebaseConfig = {
   apiKey: "AIzaSyAQtvfUNSrss6k7k7gzUlsrksUkD3drWP0",
   authDomain: "hey-abe.firebaseapp.com",
   projectId: "hey-abe",
@@ -14,6 +15,20 @@ const firebaseConfig = {
   messagingSenderId: "1024868641007",
   appId: "1:1024868641007:web:222d16e11e923c7aa0531a",
   measurementId: "G-XPVTM9VMVC"
-};
+};*/
 
-export { key, firebaseConfig }
+// Project abeshinzoexplorer
+const firebaseConfig = {
+  apiKey: "AIzaSyC34_M1FmzZfPgDwDAcg4V9sgjbdFMf78U",
+  authDomain: "abeshinzoexplorer.firebaseapp.com",
+  projectId: "abeshinzoexplorer",
+  storageBucket: "abeshinzoexplorer.appspot.com",
+  messagingSenderId: "1087667636442",
+  appId: "1:1087667636442:web:b9224a72615e2421eb7de3",
+  measurementId: "G-VEG5BX6JE5"
+}
+
+const galleryRef = '7Un7h8FMiveCWJzp4mLX'
+//const galleryRef = 'xcpa16TZ6IlV65I2D7KF'
+
+export { key, firebaseConfig, galleryRef }

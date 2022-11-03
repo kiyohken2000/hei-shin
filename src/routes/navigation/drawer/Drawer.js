@@ -5,7 +5,8 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer'
 import DrawerMenu from './DrawerMenu'
-import TabNavigator from '../tabs'
+import RootStack from '../RootStack'
+import { GalleryStacks } from '../stacks/GalleryStacks'
 
 const Drawer = createDrawerNavigator()
 
@@ -22,8 +23,15 @@ const DrawerMenuContainer = (props) => {
 }
 
 const DrawerNavigator = () => (
-  <Drawer.Navigator initialRouteName="Home" drawerContent={DrawerMenuContainer}>
-    <Drawer.Screen name="Home" component={TabNavigator} />
+  <Drawer.Navigator
+    initialRouteName="ホーム"
+    drawerContent={DrawerMenuContainer}
+    screenOptions={{
+      headerShown: false
+    }}
+  >
+    <Drawer.Screen name="ホーム" component={RootStack} />
+    <Drawer.Screen name="ギャラリー" component={GalleryStacks} />
   </Drawer.Navigator>
 )
 

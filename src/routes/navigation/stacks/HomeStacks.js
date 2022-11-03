@@ -2,6 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { navigationProps } from './navigationProps/navigationProps'
 import HeaderRightButton from './headerComponents/HeaderRightButton'
+import HeaderLeftButton from './headerComponents/HeaderLeftButton'
 
 import Home from '../../../scenes/home'
 
@@ -20,6 +21,7 @@ export const HomeStacks = () => {
           title: '早く質問しろよ',
           headerShown: true,
           headerRight: () => <HeaderRightButton />,
+          headerLeft: () => <HeaderLeftButton />,
         })}
       />
     </Stack.Navigator>
