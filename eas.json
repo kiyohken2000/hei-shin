@@ -8,7 +8,7 @@
       "distribution": "internal",
       "releaseChannel": "development",
       "ios": {
-        "simulator": false
+        "simulator": true
       }
     },
     "preview": {
