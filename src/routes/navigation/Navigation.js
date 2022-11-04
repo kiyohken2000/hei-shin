@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import DrawerNavigator from './drawer'
 import RootStack from './RootStack'
@@ -8,7 +9,10 @@ export default () => {
   return (
     <>
     <NavigationContainer>
-      <DrawerNavigator />
+      {Platform.OS === 'ios'?
+        <RootStack/>:
+        <DrawerNavigator />
+      }
     </NavigationContainer>
     <Toast />
     </>

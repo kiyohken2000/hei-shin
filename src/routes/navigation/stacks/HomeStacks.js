@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { navigationProps } from './navigationProps/navigationProps'
 import HeaderRightButton from './headerComponents/HeaderRightButton'
@@ -21,7 +22,7 @@ export const HomeStacks = () => {
           title: '早く質問しろよ',
           headerShown: true,
           headerRight: () => <HeaderRightButton />,
-          headerLeft: () => <HeaderLeftButton />,
+          headerLeft: () => {Platform.OS === 'android'?<HeaderLeftButton />:null},
         })}
       />
     </Stack.Navigator>

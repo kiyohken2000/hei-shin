@@ -24,8 +24,8 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "net.votepurchase.heyshingasong",
-      "buildNumber": "2",
+      "bundleIdentifier": "net.votepurchase.heysingasong",
+      "buildNumber": "1",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ja_JP",
         "NSPhotoLibraryUsageDescription": "画像を保存するためにフォトライブラリーを使用します",
