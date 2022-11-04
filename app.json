@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Hey! Sing a Song!",
+    "name": "Sing a Song!",
     "slug": "hei-shin-san",
     "privacy": "public",
     "platforms": [
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "net.votepurchase.heyshingasong",
-      "buildNumber": "1",
+      "buildNumber": "2",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ja_JP",
         "NSPhotoLibraryUsageDescription": "画像を保存するためにフォトライブラリーを使用します",

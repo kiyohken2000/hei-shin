@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, SafeAreaView, Text } from 'react-native'
+import { View, SafeAreaView, Text, Platform } from 'react-native'
 
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
@@ -38,7 +38,7 @@ const DrawerMenu = (props) => (
       />
     </View>
     <View style={styles.main}>
-      <Text>Hey 晋さん</Text>
+      <Text>{Platform.OS === 'ios'?'Hey! Sing a Song!':'Hey 晋さん'}</Text>
     </View>
   </SafeAreaView>
 )
