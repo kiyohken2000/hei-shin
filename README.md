@@ -21,4 +21,6 @@ eas device:create
 eas device:list
 ```
 
+iOSプロダクションビルド時はconfig.jsのreviewModeをtrueに
+
 Android更新時は`android\app\build.gradle`のバージョン番号も書き換える

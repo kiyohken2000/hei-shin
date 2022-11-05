@@ -24,6 +24,8 @@ export default function PhotoView() {
   const [input, setInput] = useState('')
   const [tagVisible, setTagVisible] = useState(true)
   const [isProcess, setIsProcess] = useState(false)
+  const [isLikeProcess, setIsLikeProcess] = useState(false)
+  const [likeCount, setLikeCount] = useState(0)
 
   useEffect(() => {
     setCurrentPhoto(photoIndexArray[index])
@@ -37,8 +39,10 @@ export default function PhotoView() {
     try {
       const photoDocumentRef = doc(firestore, 'photos', `${photoIndexArray[index].id}`);
       const documentSnapshot = await getDoc(photoDocumentRef)
-      const { id, tags } = documentSnapshot.data()
+      const { id, tags, like } = documentSnapshot.data()
       setTags(tags)
+      const tempLikeCount = like?like:0
+      setLikeCount(tempLikeCount)
     } catch(e) {
       console.log('error', e)
       addPhotoData()
@@ -144,6 +148,21 @@ export default function PhotoView() {
     }
   }
 
+  const onLikePress = async() => {
+    try {
+      setIsLikeProcess(true)
+      const photoDocumentRef = doc(firestore, 'photos', `${photoIndexArray[index].id}`);
+      await updateDoc(photoDocumentRef, {
+        like: likeCount + 1,
+      });
+      await fetchData()
+    } catch(e) {
+      console.log('onLikePress, error', e)
+    } finally {
+      setIsLikeProcess(false)
+    }
+  }
+
   return (
     <ScreenTemplate screen='PhotoView' statusBar='dark-content' key={key}>
       <Swipeable
@@ -158,9 +177,19 @@ export default function PhotoView() {
           index={index}
           deleteTag={deleteTag}
           tagVisible={tagVisible}
+          likeCount={likeCount}
         />
       </Swipeable>
       <View style={styles.fabContainer}>
+        <FAB
+          icon={!isLikeProcess?"thumb-up":"chart-bubble"}
+          color={colors.white}
+          style={[styles.fab, {backgroundColor: colors.deeppink}]}
+          size='large'
+          onPress={onLikePress}
+          disabled={isLikeProcess}
+        />
+        <View style={{paddingHorizontal:5}} />
         <FAB
           icon="pencil"
           style={[styles.fab, {backgroundColor: colors.lightGrayPurple}]}

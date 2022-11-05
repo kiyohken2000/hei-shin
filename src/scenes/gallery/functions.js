@@ -23,7 +23,8 @@ const photoIndexGenerator = ({ref, count, photoData}) => {
       index: i,
       source: `https://kiyohken2000.web.fc2.com/${ref}/${i}.jpg`,
       id: targetData?targetData.id:i,
-      tags: targetData?targetData.tags:[]
+      tags: targetData?targetData.tags:[],
+      like: targetData?.like?targetData.like:0
     }
   })
   return photoIndex
@@ -45,4 +46,14 @@ const filterTagWithInput = ({allTags, input}) => {
   return res
 }
 
-export { allTagsGenerator, photoIndexGenerator, filterPhotoWithTag, filterTagWithInput }
+const likeSort = ({photoIndexArray}) => {
+  const res = photoIndexArray.sort((a, b) => b.like - a.like);
+  return res
+}
+
+const idSort = ({photoIndexArray}) => {
+  const res = photoIndexArray.sort((a, b) => a.id - b.id);
+  return res
+}
+
+export { allTagsGenerator, photoIndexGenerator, filterPhotoWithTag, filterTagWithInput, likeSort, idSort }

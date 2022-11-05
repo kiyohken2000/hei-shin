@@ -9,7 +9,7 @@ import RenderTag from "./RenderTag";
 import { useNavigation } from "@react-navigation/native";
 import { FAB } from 'react-native-paper';
 import { colors } from "../../theme";
-import { allTagsGenerator, photoIndexGenerator, filterPhotoWithTag, filterTagWithInput } from "./functions";
+import { allTagsGenerator, photoIndexGenerator, filterPhotoWithTag, filterTagWithInput, likeSort, idSort } from "./functions";
 import { galleryRef } from "../../key";
 import Dialog from "react-native-dialog";
 
@@ -27,6 +27,8 @@ export default function Gallery() {
   const [key, setKey] = useState(0)
   const [visible, setVisible] = useState(false)
   const [input, setInput] = useState('')
+  const [reload, setReload] = useState(0)
+  const [isLikeSorted, setIsLikeSorted] = useState(false)
 
   useEffect(() => {
     const fetchData = async() => {
@@ -53,7 +55,7 @@ export default function Gallery() {
       }
     }
     fetchData()
-  }, []);
+  }, [reload]);
 
   const onImagePress = ({item}) => {
     const { index, source } = viewPhotos.find((v) => v.index === item.index)
@@ -101,6 +103,20 @@ export default function Gallery() {
     setInput('')
     setVisible(false)
   }
+
+  const onLikeSort = () => {
+    if(!isLikeSorted) {
+      setKey(prev => prev + 1)
+      const res = likeSort({photoIndexArray})
+      setViewPhotos(res)
+      setIsLikeSorted(true)
+    } else {
+      setKey(prev => prev + 1)
+      const res = idSort({photoIndexArray})
+      setViewPhotos(res)
+      setIsLikeSorted(false)
+    }
+  }
   
   return (
     <ScreenTemplate screen='Gallery' statusBar='dark-content' isLoading={isLoading} isError={isError}>
@@ -115,6 +131,7 @@ export default function Gallery() {
               return (
                 <RenderImage
                   source={item.source}
+                  like={item.like}
                   onPress={() => onImagePress({item})}
                 />
               );
@@ -125,7 +142,7 @@ export default function Gallery() {
           :
           <FlashList
             key={'#'}
-            estimatedItemSize={125}
+            estimatedItemSize={55}
             data={currentTags}
             keyExtractor={(item, index) => `${item.label}`}
             renderItem={({item, index}) => {
@@ -140,6 +157,23 @@ export default function Gallery() {
       </View>
       <View style={styles.fabContainer}>
         {!selectedTag && !isTagView?
+          <>
+          <FAB
+            icon={isLikeSorted?'close':'thumbs-up-down'}
+            color={colors.white}
+            style={[styles.fab, {backgroundColor: colors.seagreen}]}
+            size='large'
+            onPress={onLikeSort}
+          />
+          <View style={{paddingHorizontal:5}} />
+          <FAB
+            icon='autorenew'
+            color={colors.black}
+            style={[styles.fab, {backgroundColor: colors.lightyellow}]}
+            size='large'
+            onPress={() => setReload(prev => prev + 1)}
+          />
+          <View style={{paddingHorizontal:5}} />
           <FAB
             icon='sort-variant'
             color={colors.black}
@@ -147,6 +181,7 @@ export default function Gallery() {
             size='large'
             onPress={onReversePress}
           />
+          </>
           :null
         }
         <View style={{paddingHorizontal:5}} />

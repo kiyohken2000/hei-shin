@@ -1,11 +1,13 @@
 import React from 'react'
-import { Platform } from 'react-native'
+import { Platform, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { navigationProps } from './navigationProps/navigationProps'
 import HeaderRightButton from './headerComponents/HeaderRightButton'
 import HeaderLeftButton from './headerComponents/HeaderLeftButton'
 
 import Home from '../../../scenes/home'
+import { isReview } from '../../../config'
+import { rootStackOptions } from './navigationProps/navigationProps'
 
 const Stack = createStackNavigator()
 
@@ -18,12 +20,9 @@ export const HomeStacks = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={({ navigation }) => ({
-          title: '早く質問しろよ',
-          headerShown: true,
-          headerRight: () => <HeaderRightButton />,
-          headerLeft: () => {Platform.OS === 'android'?<HeaderLeftButton />:null},
-        })}
+        options={({ navigation }) => (
+          isReview?rootStackOptions.reviewMode:rootStackOptions.productionMode
+        )}
       />
     </Stack.Navigator>
   )

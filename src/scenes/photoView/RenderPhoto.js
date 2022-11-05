@@ -2,9 +2,11 @@ import React from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
 import FastImage from 'react-native-fast-image'
 import RenderTag from "./RenderTag";
+import { fontSize, colors } from "../../theme";
+import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
 export default function RenderPhoto(props) {
-  const { source, tags, deleteTag, tagVisible } = props
+  const { source, tags, deleteTag, tagVisible, likeCount } = props
   const currentTags = tags?tags:[]
 
   return (
@@ -25,6 +27,16 @@ export default function RenderPhoto(props) {
         </View>
         :null
       }
+      <View style={styles.likeContainer}>
+        <FontIcon
+          name='thumbs-up'
+          color={colors.deeppink}
+          size={fontSize.xxxLarge}
+        />
+        <View style={styles.labelContainer}>
+          <Text style={styles.likeLabel}>{likeCount}</Text>
+        </View>
+      </View>
     </FastImage>
   )
 }
@@ -34,12 +46,29 @@ const styles = StyleSheet.create({
   image: {
     width: width,
     height: height,
-    flex: 1
+    flex: 1,
   },
   tagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: '100%',
     flex: 1
+  },
+  likeContainer: {
+    position: 'absolute',
+    bottom: height * 0.15,
+    right: width * 0.1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.floralwhite,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 15
+  },
+  likeLabel: {
+    fontSize: fontSize.xxxLarge
+  },
+  labelContainer: {
+    paddingLeft: 10
   }
 })

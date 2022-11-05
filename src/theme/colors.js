@@ -12,7 +12,10 @@ const colors = {
   mediumseagreen: '#3cb371',
   seagreen: '#2e8b57',
   mediumvioletred: '#c71585',
-  deeppink: '#ff1493'
+  deeppink: '#ff1493',
+  lightyellow: '#ffffe0',
+  aquamarine: '#7fffd4',
+  floralwhite: '#fffaf0'
 }
 
 export default colors

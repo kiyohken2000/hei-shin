@@ -5,11 +5,13 @@ import DrawerNavigator from './drawer'
 import RootStack from './RootStack'
 import Toast from 'react-native-toast-message';
 
+import { isReview } from '../../config'
+
 export default () => {
   return (
     <>
     <NavigationContainer>
-      {Platform.OS === 'ios'?
+      {isReview?
         <RootStack/>:
         <DrawerNavigator />
       }

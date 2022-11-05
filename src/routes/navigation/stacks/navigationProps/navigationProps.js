@@ -1,4 +1,6 @@
 import { colors } from 'theme'
+import HeaderLeftButton from '../headerComponents/HeaderLeftButton'
+import HeaderRightButton from '../headerComponents/HeaderRightButton'
 
 const headerTintColor = 'white'
 const fontSize = 18
@@ -14,4 +16,18 @@ const navigationProps = {
   headerShadowVisible: false,
 }
 
-export { navigationProps }
+const rootStackOptions = {
+  reviewMode: {
+    title: '早く質問しろよ',
+    headerShown: true,
+    headerRight: () => <HeaderRightButton />,
+  },
+  productionMode: {
+    title: '早く質問しろよ',
+    headerShown: true,
+    headerRight: () => <HeaderRightButton />,
+    headerLeft: () => <HeaderLeftButton />,
+  }
+}
+
+export { navigationProps, rootStackOptions }
