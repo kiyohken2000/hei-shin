@@ -7,7 +7,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { firestore } from "../../firebase";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
 import { FAB } from 'react-native-paper';
-import { colors } from "../../theme";
+import { colors, fontSize } from "../../theme";
 import Dialog from "react-native-dialog";
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system'
@@ -177,18 +177,22 @@ export default function PhotoView() {
           index={index}
           deleteTag={deleteTag}
           tagVisible={tagVisible}
-          likeCount={likeCount}
         />
       </Swipeable>
       <View style={styles.fabContainer}>
-        <FAB
-          icon={!isLikeProcess?"thumb-up":"chart-bubble"}
-          color={colors.white}
-          style={[styles.fab, {backgroundColor: colors.deeppink}]}
-          size='large'
-          onPress={onLikePress}
-          disabled={isLikeProcess}
-        />
+        <View style={styles.likeButtonContainer}>
+          <FAB
+            icon={!isLikeProcess?"thumb-up":"chart-bubble"}
+            color={colors.white}
+            style={[styles.fab, {backgroundColor: colors.deeppink}]}
+            size='large'
+            onPress={onLikePress}
+            disabled={isLikeProcess}
+          />
+          <View style={styles.likeLabelContainer}>
+            <Text style={styles.likeLabel}>{likeCount}</Text>
+          </View>
+        </View>
         <View style={{paddingHorizontal:5}} />
         <FAB
           icon="pencil"
@@ -257,5 +261,18 @@ const styles = StyleSheet.create({
     borderRadius: widthRatio / 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  likeButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.khaki,
+    paddingRight: 15,
+    borderRadius: 30
+  },
+  likeLabel: {
+    fontSize: fontSize.xxxLarge
+  },
+  likeLabelContainer: {
+    paddingLeft: 10
   }
 })

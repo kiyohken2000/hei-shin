@@ -15,7 +15,8 @@ const colors = {
   deeppink: '#ff1493',
   lightyellow: '#ffffe0',
   aquamarine: '#7fffd4',
-  floralwhite: '#fffaf0'
+  floralwhite: '#fffaf0',
+  khaki: '#f0e68c'
 }
 
 export default colors

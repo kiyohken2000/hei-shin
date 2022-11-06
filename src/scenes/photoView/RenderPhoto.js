@@ -6,7 +6,7 @@ import { fontSize, colors } from "../../theme";
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
 export default function RenderPhoto(props) {
-  const { source, tags, deleteTag, tagVisible, likeCount } = props
+  const { source, tags, deleteTag, tagVisible } = props
   const currentTags = tags?tags:[]
 
   return (
@@ -27,16 +27,6 @@ export default function RenderPhoto(props) {
         </View>
         :null
       }
-      <View style={styles.likeContainer}>
-        <FontIcon
-          name='thumbs-up'
-          color={colors.deeppink}
-          size={fontSize.xxxLarge}
-        />
-        <View style={styles.labelContainer}>
-          <Text style={styles.likeLabel}>{likeCount}</Text>
-        </View>
-      </View>
     </FastImage>
   )
 }
