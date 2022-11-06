@@ -1,20 +1,27 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TouchableOpacityBase } from "react-native";
 import { colors, fontSize } from "../../theme";
 import Dialog from "react-native-dialog";
 import FontIcon from 'react-native-vector-icons/FontAwesome'
+import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get('window')
 
 export default function RenderTag(props) {
   const { item, deleteTag } = props
   const [visible, setVisible] = useState(false)
+  const navigation = useNavigation()
+
+  const onTagPress = () => {
+    navigation.navigate('Gallery', {item})
+  }
 
   return (
     <>
     <View style={styles.container}>
-      <View
+      <TouchableOpacity
         style={styles.button}
+        onPress={onTagPress}
       >
         <Text style={styles.label}>{item}</Text>
         <View style={{paddingHorizontal:5}} />
@@ -28,7 +35,7 @@ export default function RenderTag(props) {
             size={width * 0.04}
           />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     </View>
     <Dialog.Container visible={visible}>
       <Dialog.Title>タグを削除しますか？</Dialog.Title>

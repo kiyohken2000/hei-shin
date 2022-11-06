@@ -27,7 +27,8 @@ const DrawerNavigator = () => (
     initialRouteName="ホーム"
     drawerContent={DrawerMenuContainer}
     screenOptions={{
-      headerShown: false
+      headerShown: false,
+      swipeEdgeWidth: 0,
     }}
   >
     <Drawer.Screen name="ホーム" component={RootStack} />

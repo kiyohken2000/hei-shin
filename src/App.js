@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import store from 'utils/store'
 import 'utils/ignore'
 import { UserContextProvider } from './contexts/UserContext'
+import { GalleryContextProvider } from './contexts/GalleryContext'
 
 // assets
 import { imageAssets } from 'theme/images'
@@ -30,9 +31,11 @@ export default function App() {
   if (!didLoad) return <View />
   return (
     <Provider store={store}>
-      <UserContextProvider>
-        <Router />
-      </UserContextProvider>
+      <GalleryContextProvider>
+        <UserContextProvider>
+          <Router />
+        </UserContextProvider>
+      </GalleryContextProvider>
     </Provider>
   )
 }

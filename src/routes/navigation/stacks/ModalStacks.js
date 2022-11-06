@@ -42,7 +42,7 @@ export const ModalStacks = () => {
               }}
             />
           </Stack.Navigator>
-      )}
+        )}
       </HomeTitleContext.Consumer>
     </HomeTitleContext.Provider>
   )

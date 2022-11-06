@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView, FlatList, Dimensions } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import ScreenTemplate from "../../components/ScreenTemplate";
@@ -6,15 +6,17 @@ import { firestore } from "../../firebase";
 import { doc, getDoc, collection, getDocs, query } from "firebase/firestore";
 import RenderImage from "./RenderImage";
 import RenderTag from "./RenderTag";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { FAB } from 'react-native-paper';
 import { colors } from "../../theme";
 import { allTagsGenerator, photoIndexGenerator, filterPhotoWithTag, filterTagWithInput, likeSort, idSort } from "./functions";
-import { galleryRef } from "../../key";
 import Dialog from "react-native-dialog";
+import { GalleryContext } from "../../contexts/GalleryContext";
+import { HomeTitleContext } from '../../contexts/HomeTitleContext'
 
 export default function Gallery() {
   const navigation = useNavigation()
+  const route = useRoute()
   const [photoIndexArray, setPhotoIndexArray] = useState([])
   const [viewPhotos, setViewPhotos] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -29,6 +31,14 @@ export default function Gallery() {
   const [input, setInput] = useState('')
   const [reload, setReload] = useState(0)
   const [isLikeSorted, setIsLikeSorted] = useState(false)
+  const { count, ref } = useContext(GalleryContext)
+  const { setTitle } = useContext(HomeTitleContext)
+
+  useEffect(() => {
+    if(!route.params) return
+    const tag = {count: 0, label: route.params.item}
+    onTagSelect({tag})
+  }, [route.params])
 
   useEffect(() => {
     const fetchData = async() => {
@@ -41,9 +51,6 @@ export default function Gallery() {
         const allTagArray = allTagsGenerator({items: photoData})
         setAllTags(allTagArray)
         setCurrentTags(allTagArray)
-        const galleryDocumentRef = doc(firestore, 'galery', galleryRef);
-        const documentSnapshot = await getDoc(galleryDocumentRef)
-        const { count, ref } = documentSnapshot.data()
         const photoIndex = photoIndexGenerator({ref, count, photoData})
         setPhotoIndexArray(photoIndex)
         setViewPhotos(photoIndex)
@@ -79,6 +86,7 @@ export default function Gallery() {
 
   const onTagSelect = ({tag}) => {
     const result = filterPhotoWithTag({tag, photoIndexArray})
+    setTitle(tag.label)
     setSelectedTag(tag)
     setViewPhotos(result)
     setIsTagView(false)
@@ -88,6 +96,7 @@ export default function Gallery() {
     setViewPhotos(photoIndexArray)
     setIsTagView(false)
     setSelectedTag('')
+    setTitle('ギャラリー')
     setCurrentTags(allTags)
   }
 
@@ -169,17 +178,19 @@ export default function Gallery() {
           <FAB
             icon='autorenew'
             color={colors.black}
-            style={[styles.fab, {backgroundColor: colors.lightyellow}]}
+            style={[styles.fab, {backgroundColor: colors.lightyellow, opacity: !isLikeSorted?1.0: 0.6}]}
             size='large'
             onPress={() => setReload(prev => prev + 1)}
+            disabled={isLikeSorted}
           />
           <View style={{paddingHorizontal:5}} />
           <FAB
             icon='sort-variant'
             color={colors.black}
-            style={[styles.fab, {backgroundColor: isReverse?colors.lightsteelblue: colors.mediumseagreen}]}
+            style={[styles.fab, {backgroundColor: isReverse?colors.lightsteelblue: colors.mediumseagreen, opacity: !isLikeSorted?1.0: 0.6}]}
             size='large'
             onPress={onReversePress}
+            disabled={isLikeSorted}
           />
           </>
           :null
