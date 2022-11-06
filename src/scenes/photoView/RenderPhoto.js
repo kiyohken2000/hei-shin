@@ -2,8 +2,6 @@ import React from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
 import FastImage from 'react-native-fast-image'
 import RenderTag from "./RenderTag";
-import { fontSize, colors } from "../../theme";
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
 export default function RenderPhoto(props) {
   const { source, tags, deleteTag, tagVisible } = props
@@ -44,21 +42,4 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1
   },
-  likeContainer: {
-    position: 'absolute',
-    bottom: height * 0.15,
-    right: width * 0.1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.floralwhite,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 15
-  },
-  likeLabel: {
-    fontSize: fontSize.xxxLarge
-  },
-  labelContainer: {
-    paddingLeft: 10
-  }
 })
