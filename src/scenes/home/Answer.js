@@ -1,25 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Dimensions, Text, ScrollView } from "react-native";
 import { colors, fontSize } from 'theme'
-import FastImage from 'react-native-fast-image'
+import RenderImage from './RenderImage';
+
+const { height, width } = Dimensions.get('window')
 
 export default function Answer(props) {
   const { answer, imageSource } = props
-  const source = imageSource?{uri: imageSource}:null
 
   return (
     <View style={styles.answerArea}>
       <ScrollView style={styles.answerContainer}>
         <Text style={styles.answerText}>{answer}</Text>
-        {source?
-          <>
-          <View style={{paddingVertical: 10}} />
-          <FastImage
-            style={styles.image}
-            source={source}
-            resizeMode='contain'
-          />
-          </>
+        {imageSource?
+          <View style={styles.imageContainer}>
+            <RenderImage
+              uri={imageSource}
+              desiredWidth={width * 0.75}
+            />
+          </View>
           :null
         }
         <View style={{paddingVertical: 20}} />
@@ -28,7 +27,6 @@ export default function Answer(props) {
   )
 }
 
-const { height, width } = Dimensions.get('window')
 const styles = StyleSheet.create({
   answerArea: {
     justifyContent: 'center',
@@ -49,8 +47,8 @@ const styles = StyleSheet.create({
     fontSize: fontSize.xLarge,
     fontWeight: '500',
   },
-  image: {
-    width: '100%',
-    height: height * 0.5,
-  },
+  imageContainer: {
+    paddingTop: 20,
+    alignItems: 'center'
+  }
 })
