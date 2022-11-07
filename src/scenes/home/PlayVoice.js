@@ -9,7 +9,7 @@ import { firestore } from "../../firebase";
 import Toast from 'react-native-toast-message';
 
 export default function PlayVoice(props) {
-  const { voiceSource, setVoiceSource, setAnswer, incrementKey, results, answer } = props
+  const { voiceSource, setVoiceSource, setAnswer, incrementKey, results, answer, setImageSource } = props
   const sound = useRef(new Audio.Sound());
   const [isLoading, setIsLoading] = useState(true)
   const [isUploadDisable, setIsUploadDisable] = useState(false)
@@ -46,6 +46,7 @@ export default function PlayVoice(props) {
   const onStopPress = () => {
     setVoiceSource('')
     setAnswer('')
+    setImageSource('')
   }
 
   const onRepeat = () => {

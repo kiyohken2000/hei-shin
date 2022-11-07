@@ -2,24 +2,28 @@ import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../../contexts/UserContext'
+import { GalleryContext } from '../../contexts/GalleryContext'
 import ScreenTemplate from '../../components/ScreenTemplate'
-import { textFlatten, apiRequest } from './functions'
+import { textFlatten, apiRequest, randomImageGenerator } from './functions'
 import { playVoice, playError } from './playSoud'
 import Voice, { SpeechResultsEvent, SpeechErrorEvent } from "@react-native-voice/voice";
 import RecognizeVoice from './RecognizeVoice'
 import Answer from './Answer'
 import Recording from './Recording'
 import PlayVoice from './PlayVoice'
+import { isReview } from '../../config'
 
 export default function Main(props) {
   const { incrementKey } = props
   const navigation = useNavigation()
   const { user } = useContext(UserContext)
+  const { count } = useContext(GalleryContext)
   const [results, setResults] = useState([]);
   const [isListening, setIsListening] = useState(false);
   const [answer, setAnswer] = useState('')
   const [isProcess, setIsProcess] = useState(false)
   const [voiceSource, setVoiceSource] = useState('')
+  const [imageSource, setImageSource] = useState('')
  
   useEffect(() => {
     function onSpeechResults(e) {
@@ -69,6 +73,8 @@ export default function Main(props) {
       setIsProcess(true)
       const { answerText, voiceUrl } = await apiRequest({origin})
       if(!answerText || !voiceUrl) return onError()
+      const imgUrl = randomImageGenerator({count})
+      setImageSource(imgUrl)
       setAnswer(answerText)
       setVoiceSource(voiceUrl)
       setIsProcess(false)
@@ -90,7 +96,7 @@ export default function Main(props) {
           <RecognizeVoice results={results} />
         </View>
         <View style={styles.answerArea}>
-          <Answer answer={answer} />
+          <Answer answer={answer} imageSource={imageSource} />
         </View>
         <View style={styles.buttonArea}>
           {!voiceSource?
@@ -106,6 +112,7 @@ export default function Main(props) {
               voiceSource={voiceSource}
               setVoiceSource={setVoiceSource}
               setAnswer={setAnswer}
+              setImageSource={setImageSource}
               incrementKey={incrementKey}
               results={results}
               answer={answer}

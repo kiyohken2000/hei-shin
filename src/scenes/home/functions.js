@@ -1,7 +1,7 @@
 import axios from "axios"
 import { key } from '../../key'
-import { kanaToRomaji } from "kuroshiro/lib/util";
 import {decode, encode} from 'base-64'
+import { isReview } from "../../config";
 if (!global.btoa) {global.btoa = encode;}
 if (!global.atob) {global.atob = decode;}
 
@@ -12,6 +12,13 @@ const sleeping = (ms) => {
 const textFlatten = ({results}) => {
   const res = results.join()
   return res
+}
+
+const randomImageGenerator = ({count}) => {
+  const id = Math.floor(Math.random() * (count - 0 + 1)) + 0;
+  const sourceDir = isReview?'appstore':'abeshinzo'
+  const imageUrl = `https://kiyohken2000.web.fc2.com/${sourceDir}/${id}.jpg`
+  return imageUrl
 }
 
 const apiRequest = async({origin}) => {
@@ -198,5 +205,6 @@ const getVoice = async({uuid}) => {
 
 export {
   textFlatten,
-  apiRequest
+  apiRequest,
+  randomImageGenerator
 }

@@ -1,6 +1,6 @@
 import { Platform } from "react-native"
 
-const reviewMode = false
+const reviewMode = true
 const isReview = Platform.OS === 'ios' && reviewMode
 
 const tempUser = {

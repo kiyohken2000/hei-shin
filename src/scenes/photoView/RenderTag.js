@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TouchableOpacityBase } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { colors, fontSize } from "../../theme";
 import Dialog from "react-native-dialog";
 import FontIcon from 'react-native-vector-icons/FontAwesome'
