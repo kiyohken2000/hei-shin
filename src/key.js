@@ -3,6 +3,7 @@ const key = {
   uberduckKey: 'pub_uwgbmqsbkisaqltihc',
   uberduckSecret: 'pk_73b45083-e4ea-47ef-bc4e-09bd120afbd1',
   voiceModelUUID: '1375622b-b3e2-47fe-aff2-e1f6eba53257',
+  dummyVoiceModelUUID: 'e758f24d-e820-44ec-acb5-1fc1b523121b',
   yahooClientID: 'dj00aiZpPUFQMUlhR2xIeGpaQSZzPWNvbnN1bWVyc2VjcmV0Jng9YWM-'
 }
 

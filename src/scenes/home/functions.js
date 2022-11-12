@@ -86,11 +86,12 @@ const getAbeAnswer = async({message}) => {
 
 const generateVoice = async({text}) => {
   try {
+    const voiceMode = isReview?key.dummyVoiceModelUUID:key.voiceModelUUID
     const response = await axios.post(
       'https://api.uberduck.ai/speak',
       {
         'pace': 1,
-        'voicemodel_uuid': key.voiceModelUUID,
+        'voicemodel_uuid': voiceMode,
         'speech': text
       },
       {
