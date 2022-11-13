@@ -1,9 +1,6 @@
 import React from 'react'
-import { Platform, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { navigationProps } from './navigationProps/navigationProps'
-import HeaderRightButton from './headerComponents/HeaderRightButton'
-import HeaderLeftButton from './headerComponents/HeaderLeftButton'
 
 import Home from '../../../scenes/home'
 import { isReview } from '../../../config'
