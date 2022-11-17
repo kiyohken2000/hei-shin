@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Sing a Song!",
+    "name": "意味のない質問だよ",
     "slug": "hei-shin-san",
     "privacy": "public",
     "platforms": [
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "net.votepurchase.heysingasong",
-      "buildNumber": "5",
+      "buildNumber": "6",
       "infoPlist": {
         "CFBundleDevelopmentRegion": "ja_JP",
         "NSPhotoLibraryUsageDescription": "画像を保存するためにフォトライブラリーを使用します",
