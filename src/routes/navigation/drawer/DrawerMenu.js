@@ -38,7 +38,7 @@ const DrawerMenu = (props) => (
       />
     </View>
     <View style={styles.main}>
-      <Text>{Platform.OS === 'ios'?'Hey! Sing a Song!':'Hey 晋さん'}</Text>
+      <Text>Hey 晋さん</Text>
     </View>
   </SafeAreaView>
 )

@@ -7,6 +7,7 @@ import { textFlatten } from "./functions";
 import { doc, collection, serverTimestamp, setDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import Toast from 'react-native-toast-message';
+import { talkRef } from "../../config";
 
 export default function PlayVoice(props) {
   const { voiceSource, setVoiceSource, setAnswer, incrementKey, results, answer, setImageSource } = props
@@ -58,7 +59,7 @@ export default function PlayVoice(props) {
     try {
       setIsUploadDisable(true)
       const question = textFlatten({results})
-      const talkCollectionRef = doc(collection(firestore, 'talk'));
+      const talkCollectionRef = doc(collection(firestore, talkRef));
       await setDoc(talkCollectionRef, {
         question: question,
         voiceSource: voiceSource,

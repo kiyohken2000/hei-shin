@@ -6,6 +6,7 @@ import { firestore } from '../../firebase'
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import RenderItem from "./RenderItem";
 import { removeAbe } from "./functions";
+import { talkRef } from "../../config";
 
 export default function History() {
   const navigation = useNavigation()
@@ -17,7 +18,7 @@ export default function History() {
     const fetchData = async() => {
       try {
         setIsLoading(true)
-        const talkCollectionRef = collection(firestore, 'talk');
+        const talkCollectionRef = collection(firestore, talkRef);
         const q = query(talkCollectionRef, orderBy("timpstamp", "desc"), limit(100))
         const querySnapshot = await getDocs(q)
         const items = querySnapshot.docs.map((doc) => doc.data())
