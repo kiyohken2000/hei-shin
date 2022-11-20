@@ -46,7 +46,7 @@ const textMerge = ({origin, noSpaceRomaji}) => {
   // 「くだらない質問で終わっちゃったね。また」をつけるかどうか
   const extraOn = false
   const extraText = extraOn?'くだらない質問で終わっちゃったね。また。':''
-  const extraRomaji = extraOn?'.kudaranaishItsumoNdeowaclchacltanepaumata':''
+  const extraRomaji = extraOn?'.kudaranaishItsumoNdeowaQchaQtane.mata':''
   return {
     mergedOrigin: `${origin}${extraText}`,
     mergedRomaji: `${noSpaceRomaji}${extraRomaji}`
@@ -54,7 +54,7 @@ const textMerge = ({origin, noSpaceRomaji}) => {
 }
 
 const removeSpace = ({romaji}) => {
-  return romaji.replace(/ /g, '')
+  return romaji.replace(/pau/g, '.').replace(/cl/g, 'Q').replace(/ /g, '')
 }
 
 const getAbeAnswer = async({message}) => {
