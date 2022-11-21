@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ScreenTemplate from "../../components/ScreenTemplate";
@@ -6,10 +6,19 @@ import { colors } from '../../theme'
 import Question from "./Question";
 import Answer from "../home/Answer";
 import PlayVoice from "./PlayVoice";
+import { GalleryContext } from "../../contexts/GalleryContext";
+import { randomImageGenerator } from "../home/functions";
 
 export default function HistoryDetail() {
   const route = useRoute()
+  const { count } = useContext(GalleryContext)
   const { item } = route.params
+  const [imageSource, setImageSource] = useState('')
+
+  useEffect(() => {
+    const imgUrl = randomImageGenerator({count})
+    setImageSource(imgUrl)
+  }, [item.id])
 
   return (
     <ScreenTemplate screen='HistoryDetail' statusBar='dark-content'>
@@ -18,7 +27,7 @@ export default function HistoryDetail() {
           <Question question={item.question} />
         </View>
         <View style={styles.answerArea}>
-          <Answer answer={item.answer} />
+          <Answer answer={item.answer} imageSource={imageSource} />
         </View>
         <View style={styles.buttonArea}>
           <PlayVoice voiceSource={item.voiceSource} />
