@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { fontSize, colors } from "../../theme";
-import { noribenGenerater } from "./functions";
+import { noribenGenerator } from "./functions";
 
 export default function Question(props) {
   const { question } = props
-  const noriben = noribenGenerater({question})
+  const noriben = noribenGenerator({question})
 
   return (
     <View style={styles.container}>

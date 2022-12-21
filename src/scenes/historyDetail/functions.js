@@ -1,7 +1,7 @@
-const noribenGenerater = ({question}) => {
+const noribenGenerator = ({question}) => {
   const length = question.length
   const noriben = Array(length).fill('█').join().replace(/,/g, '')
   return noriben
 }
 
-export { noribenGenerater }
+export { noribenGenerator }
